@@ -25,15 +25,15 @@ The browser-tested build has no runtime content or GitHub dependency. Content is
 
 The tests cover canonical content, ordering, Writing-authored relationship inversion, Connected Work tab behavior and scroll restoration, both detail routes, optional image and Live Site omission, unknown routes, and internal and external destinations. A new built-route assertion verifies that the favicon is declared and emitted.
 
-## Agent-observed browser QA
+## Direct preview browser QA
 
-These checks used the exact production build uploaded to the protected preview. The preview route and artifact checks above establish the deployment boundary. They do not turn local browser observations into direct interactive preview observations.
+These checks ran against the unique protected preview URL after establishing an authenticated browser session. Each width was exercised separately on the deployed homepage, Project Details route, and Writing detail route.
 
 | Width | Layout and readability | Overflow | Navigation and keyboard | Focus |
 | --- | --- | --- | --- | --- |
-| 320px | Homepage, Project Details, and Writing detail reflowed to the viewport. Cards, metadata, prose, code, and links remained readable. | No horizontal document overflow on any route. No broken images. | Projects opened first. Arrow keys changed the selected tab and moved focus. Home, End, internal detail, relationship, and return destinations are covered by the behavior and route tests. | The selected tab showed a 3px solid Steel Slate outline with a visible inset selected-state rule. Link focus uses the same 3px outline. |
-| 768px | The three routes retained the intended hierarchy. Detail prose measured 720px and remained within the viewport. | No horizontal document overflow on any route. No broken images. | Connected Work and all detail destinations remained present and operable. | The same visible focus treatment remained active. |
-| 1440px | The homepage used the wider composition while both detail routes kept a 720px reading column. | No horizontal document overflow on any route. No broken images. | Connected Work and all detail destinations remained present and operable. | The same visible focus treatment remained active. |
+| 320px | Homepage, Project Details, and Writing detail reflowed to the viewport. Cards, metadata, prose, code, and links remained readable. | No horizontal document overflow on any route. No broken images. | Projects opened first. Arrow Right selected Writing, Home selected Projects, End selected Writing, and Arrow Left selected Projects. Project Details, related Writing, and Back to all work were activated and reached their deployed routes. | Projects and Project Details were focused directly. The tab showed a 3px solid Steel Slate outline at -4px; the link showed the same 3px outline at 4px. |
+| 768px | The three routes retained the intended hierarchy. Detail content remained within the viewport. | No horizontal document overflow on any route. No broken images. | The same Arrow Right, Home, End, and Arrow Left sequence selected Writing, Projects, Writing, and Projects. Project Details, related Writing, and Back to all work reached their deployed routes. | The same visible tab and link focus treatment remained active. |
+| 1440px | The homepage used the wider composition while both detail routes kept their constrained reading column. | No horizontal document overflow on any route. No broken images. | The same Arrow Right, Home, End, and Arrow Left sequence selected Writing, Projects, Writing, and Projects. Project Details, related Writing, and Back to all work reached their deployed routes. | The same visible tab and link focus treatment remained active. |
 
 Additional browser checks:
 
@@ -42,7 +42,8 @@ Additional browser checks:
 - With reduced motion enabled, animation and transition durations resolved to `0.00001s`.
 - Missing Project and Writing images omitted their regions without leaving empty containers.
 - Disc Golf Labs omitted its unsupported Live Site action while preserving the Source Code destination.
-- Browser console inspection after the favicon fix returned no warnings or errors.
+- The Source Code control was exercised from the preview, and its rendered GitHub destination was opened separately in the same browser session. GitHub loaded the repository with the title `GitHub - NMasters52/DiscGolfLabs-Frontend · GitHub` and heading `Masters Disc Golf - Frontend`.
+- The preview emitted no portfolio application warnings or errors. Browser inspection did capture one Google One Tap deprecation warning from a `vercel.com` script injected by Vercel's protected-preview interface; it is external to the deployed portfolio bundle.
 
 ## Lighthouse and measurable web vitals
 
@@ -58,9 +59,8 @@ All routes meet the agreed Lighthouse performance target of 90. Lighthouse initi
 
 ## Failures, limitations, and exclusions
 
-- Direct interactive browser QA against the unique preview URL remains unverified because Deployment Protection redirects unauthenticated browsers to Vercel login. Authenticated requests prove the preview routes and favicon serve successfully. Project and Writing artifact hashes prove those preview pages match the browser-tested production build; the homepage differs only by Vercel's preview-toolbar injection.
 - Field Core Web Vitals are unavailable because this new preview has no representative traffic. Lighthouse lab metrics are recorded above.
-- External destinations were verified from rendered `href` values. This pass did not claim control of the destination repositories or their availability.
+- The external repository was available during this pass. Its future availability remains outside this portfolio's control.
 - No manual theme toggle exists in this slice. System light and dark behavior were verified.
 - Human subjective review beyond the agent-observed browser pass is unverified.
 - GitHub activity, remaining launch records, final polish, and production promotion were not changed or verified in this slice.
