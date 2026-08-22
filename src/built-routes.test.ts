@@ -129,4 +129,11 @@ describe("built portfolio routes", () => {
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
     expect(page).not.toContain("Live Site");
   });
+
+  it("publishes an explicit favicon without a missing browser request", () => {
+    const page = html();
+
+    expect(page).toContain('<link rel="icon" href="/favicon.svg" type="image/svg+xml">');
+    expect(fs.existsSync(path.join(dist, "favicon.svg"))).toBe(true);
+  });
 });

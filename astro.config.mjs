@@ -3,5 +3,5 @@ import react from "@astrojs/react";
 
 export default defineConfig({
   integrations: [react()],
-  site: "https://dev-portfolio.vercel.app",
+  site: "https://dev-portfolio-weld-nine.vercel.app",
 });
