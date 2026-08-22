@@ -1,10 +1,23 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import ConnectedWork from "../components/ConnectedWork";
+import { getProjects, getWritings } from "../lib/content";
+
+const projects = getProjects();
+const writings = getWritings();
 ---
 <BaseLayout title="Nicholas Masters | Software engineer">
   <section class="intro">
     <p class="kicker">Selected engineering work</p>
     <h1>Products, systems, and the thinking behind them.</h1>
-    <p>I build resilient software with clear product boundaries. The full work index is the next implementation slice.</p>
+    <p>I build resilient software with clear product boundaries. Explore the products and engineering notes that show how I work.</p>
+  </section>
+  <section class="work" aria-labelledby="connected-work-heading">
+    <div class="section-heading">
+      <p class="kicker">Connected Work</p>
+      <h2 id="connected-work-heading">Shipped work and the thinking behind it.</h2>
+      <p>Projects and writing share one evidence surface. Switch views without losing your place.</p>
+    </div>
+    <ConnectedWork client:load projects={projects} writings={writings} />
   </section>
 </BaseLayout>

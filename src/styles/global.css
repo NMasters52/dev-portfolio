@@ -15,10 +15,22 @@ h1 { max-width: 18ch; font-family: ui-monospace, monospace; font-size: clamp(2.5
 .intro > p:last-child, .standfirst { max-width: 62ch; font-size: clamp(1.15rem, 2vw, 1.4rem); color: var(--muted); }
 .kicker, .record, .breadcrumb, .built-with h2 { font-family: ui-monospace, monospace; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
 .kicker { color: var(--accent); }
+.section-heading { max-width: 720px; margin-bottom: 2rem; }
+.section-heading h2 { max-width: 18ch; font-family: ui-monospace, monospace; font-size: clamp(2rem, 5vw, 3.75rem); font-weight: 500; }
+.section-heading > p:last-child { max-width: 58ch; color: var(--muted); }
+.work-shell { overflow: hidden; border: 1px solid var(--line); border-radius: .35rem; background: var(--card); box-shadow: 7px 7px 0 color-mix(in srgb, var(--accent) 24%, transparent); }
+.work-tabs { display: grid; grid-template-columns: repeat(2, 1fr); border-bottom: 1px solid var(--line); }
+.work-tab { display: flex; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border: 0; background: transparent; color: var(--muted); font: inherit; font-weight: 700; text-align: left; cursor: pointer; }
+.work-tab + .work-tab { border-left: 1px solid var(--line); }
+.work-tab[aria-selected="true"] { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--ink); box-shadow: inset 0 -3px var(--accent); }
+.work-tab:focus-visible, .work-panel:focus-visible { outline: 3px solid var(--accent); outline-offset: -4px; }
+.work-panel { max-height: 44rem; overflow-y: auto; padding: clamp(1.25rem, 3vw, 2.5rem); }
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1.25rem; }
-.card { display: flex; flex-direction: column; min-height: 28rem; padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: .35rem; background: var(--card); box-shadow: 7px 7px 0 color-mix(in srgb, var(--accent) 24%, transparent); }
+.card { display: flex; flex-direction: column; min-height: 28rem; padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--line); border-radius: .35rem; background: var(--paper); }
 .card h3 { font-size: 1.75rem; }
 .card h3 a { color: var(--ink); }
+.card-record { display: flex; justify-content: space-between; gap: 1rem; margin: 0; color: var(--muted); font-family: ui-monospace, monospace; font-size: .72rem; letter-spacing: .04em; text-transform: uppercase; }
+.card-record span:first-child { color: var(--accent); }
 .tags { display: flex; flex-wrap: wrap; gap: .5rem; padding: 0; list-style: none; }
 .tags li { padding: .2rem .55rem; border: 1px solid var(--line); border-radius: 999px; font-size: .78rem; }
 .links { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0; font-weight: 650; }

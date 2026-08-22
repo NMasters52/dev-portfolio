@@ -21,10 +21,14 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.6",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitest/coverage-v8": "latest",
+    "happy-dom": "^20.11.6",
     "typescript": "latest",
     "vitest": "latest"
   }

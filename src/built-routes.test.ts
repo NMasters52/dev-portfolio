@@ -41,4 +41,23 @@ describe("built portfolio routes", () => {
     expect(page).toContain("That work record does not exist");
     expect(page).toContain('href="/"');
   });
+
+  it("builds Connected Work with Projects selected and canonical destinations", () => {
+    const page = html();
+
+    expect(page).toContain("Connected Work");
+    expect(page).toContain('role="tablist"');
+    expect(page).toContain('role="tab"');
+    expect(page).toContain('aria-selected="true"');
+    expect(page).toContain("Projects");
+    expect(page).toContain("Writings");
+    expect(page).toContain("Disc Golf Labs");
+    expect(page).toContain("In progress");
+    expect(page).toMatch(/Last updated (?:<!-- -->)?August 10, 2026/);
+    expect(page).toMatch(/\+(?:<!-- -->)?6/);
+    expect(page).toContain('href="/projects/disc-golf-labs/"');
+    expect(page).toContain('href="https://github.com/NMasters52/DiscGolfLabs-Frontend"');
+    expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
+    expect(page).not.toContain("Live Site");
+  });
 });
