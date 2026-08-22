@@ -15,10 +15,10 @@ const relatedProjects = writing.relatedProjects.map(getProject);
     <p class="kicker">Engineering note</p>
     <h1>{writing.title}</h1>
     <p class="standfirst">{writing.summary}</p>
-    <div class="writing-meta"><span>{writing.formattedPublishedAt} · {writing.readingTimeMinutes} min read</span><ul class="tags" aria-label="Topics">{writing.tags.map((tag) => <li>{tag}</li>)}</ul></div>
+    <div class="writing-meta"><span><time datetime={writing.publishedAt}>{writing.formattedPublishedAt}</time> · {writing.readingTimeMinutes} min read</span><ul class="tags" aria-label="Topics">{writing.tags.map((tag) => <li>{tag}</li>)}</ul></div>
     {writing.image && <ContentImage image={writing.image} />}
     <div class="prose" set:html={writing.bodyHtml} />
-    <section class="related-block"><h2>Related projects</h2>{relatedProjects.map((project) => <article><h3><a href={`/projects/${project.slug}/`}>{project.title}</a></h3><p class="record">{project.statusLabel} · Last updated {project.formattedUpdatedAt}</p></article>)}</section>
+    <section class="related-block" aria-labelledby="related-projects-heading"><h2 id="related-projects-heading">Related projects</h2>{relatedProjects.map((project) => <article><h3><a href={`/projects/${project.slug}/`}>{project.title}</a></h3><p class="record">{project.statusLabel} · Last updated {project.formattedUpdatedAt}</p></article>)}</section>
     <a class="back" href="/">← Back to all work</a>
   </article>
 </BaseLayout>

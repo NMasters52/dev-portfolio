@@ -34,6 +34,42 @@ Four constraints cover nearly all of it. Each is a fact about the repository, no
 3. **Small task shaping.** One behavior per session. If the diff cannot be read in a minute, the task was too big.
 4. **Gates, not vibes.** Types, lint, and tests run on every agent diff before a human reads a line.
 
+```yaml
+session:
+  budget: one-behavior
+fences:
+  types: strict
+  lint: error
+gates:
+  pre_review: [types, lint, tests]
+  tests: failing-first
+output:
+  diff_only: true
+```
+
+<figure aria-labelledby="guardrail-flow-caption">
+  <svg viewBox="0 0 640 150" role="img" aria-label="A task crosses type and lint checks into a small model, then its patch crosses tests and review">
+    <defs>
+      <marker id="guardrail-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="currentColor" stroke-width="1.6" />
+      </marker>
+    </defs>
+    <g font-family="ui-monospace, monospace" font-size="13" text-anchor="middle">
+      <rect x="10" y="46" width="120" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+      <text x="70" y="72" fill="currentColor">task</text>
+      <rect x="260" y="46" width="140" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.8" />
+      <text x="330" y="72" fill="currentColor">small model</text>
+      <rect x="510" y="46" width="120" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
+      <text x="570" y="72" fill="currentColor">patch</text>
+      <line x1="134" y1="68" x2="254" y2="68" stroke="currentColor" stroke-width="1.5" marker-end="url(#guardrail-arrow)" />
+      <line x1="404" y1="68" x2="504" y2="68" stroke="currentColor" stroke-width="1.5" marker-end="url(#guardrail-arrow)" />
+      <text x="194" y="34" fill="currentColor" opacity="0.65" font-size="11">types + lint</text>
+      <text x="454" y="34" fill="currentColor" opacity="0.65" font-size="11">tests + review</text>
+    </g>
+  </svg>
+  <figcaption id="guardrail-flow-caption">Every model pass crosses the same two checks.</figcaption>
+</figure>
+
 > The model proposes; the repository disposes.
 
 ## Running it in Disc Golf Labs

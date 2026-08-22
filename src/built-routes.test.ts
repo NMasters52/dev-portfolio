@@ -49,7 +49,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain("How it&#39;s built");
     expect(page).toContain("Where it stands");
     expect(page).toContain("Related writing");
-    expect(page).toContain("August 14, 2026 · 3 min read");
+    expect(page).toMatch(/August 14, 2026 · \d+ min read/);
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
     expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
     expect(page).not.toContain("Live Site");
@@ -60,13 +60,49 @@ describe("built portfolio routes", () => {
     expect(page).not.toMatch(/available now|launched successfully/i);
   });
 
-  it("builds the writing route with derived metadata and its project link", () => {
+  it("builds the Writing header in the approved thesis-first hierarchy", () => {
     const page = html("writings", "small-models-strong-guardrails");
-    expect(page).toContain("Small Models, Strong Guardrails");
-    expect(page).toContain("August 14, 2026");
-    expect(page).toMatch(/\d+ min read/);
-    expect(page).toContain('href="/projects/disc-golf-labs/"');
+
+    const breadcrumb = page.indexOf('<nav class="breadcrumb" aria-label="Breadcrumb">');
+    const kicker = page.indexOf('<p class="kicker">Engineering note</p>');
+    const title = page.indexOf("<h1>Small Models, Strong Guardrails</h1>");
+    const standfirst = page.indexOf(
+      '<p class="standfirst">How repository constraints make smaller coding models useful without outsourcing engineering judgment.</p>',
+    );
+    const metadata = page.indexOf('<div class="writing-meta">');
+    const body = page.indexOf('<div class="prose">');
+
+    expect(breadcrumb).toBeGreaterThan(-1);
+    expect(kicker).toBeGreaterThan(breadcrumb);
+    expect(title).toBeGreaterThan(kicker);
+    expect(standfirst).toBeGreaterThan(title);
+    expect(metadata).toBeGreaterThan(standfirst);
+    expect(body).toBeGreaterThan(metadata);
+    expect(page).toContain('<time datetime="2026-08-14">August 14, 2026</time> · 4 min read');
+    expect(page).toContain('<ul class="tags" aria-label="Topics"><li>AI</li><li>Agents</li><li>Workflow</li></ul>');
     expect(page).not.toContain("<img");
+  });
+
+  it("renders authored Writing semantics and the complete path back to related work", () => {
+    const page = html("writings", "small-models-strong-guardrails");
+    const prose = page.slice(page.indexOf('<div class="prose">'), page.indexOf('<section class="related-block"'));
+    const related = page.slice(page.indexOf('<section class="related-block"'), page.indexOf('<a class="back"'));
+
+    expect(prose).toContain("<h2>The claim</h2>");
+    expect(prose).toContain("<ol>");
+    expect(prose).toContain("<code>any</code>");
+    expect(prose).toContain('<code class="language-yaml">');
+    expect(prose).toContain('<figure aria-labelledby="guardrail-flow-caption">');
+    expect(prose).toContain('<svg viewBox="0 0 640 150" role="img"');
+    expect(prose).toContain('<figcaption id="guardrail-flow-caption">');
+    expect(prose).toContain("<blockquote>");
+    expect(prose).toContain("The model proposes; the repository disposes.");
+    expect(related).toContain('<section class="related-block" aria-labelledby="related-projects-heading">');
+    expect(related).toContain('<h2 id="related-projects-heading">Related projects</h2>');
+    expect(related).toContain('<a href="/projects/disc-golf-labs/">Disc Golf Labs</a>');
+    expect(related).toContain("In progress · Last updated August 10, 2026");
+    expect(related).not.toContain("Founder");
+    expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
   });
 
   it("builds a useful not-found page for unknown identities", () => {

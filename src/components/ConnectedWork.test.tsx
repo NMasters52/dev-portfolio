@@ -44,7 +44,7 @@ describe("Connected Work route behavior", () => {
     const writingsTab = screen.getByRole("tab", { name: /Writings/ });
     expect(writingsTab).toHaveFocus();
     expect(writingsTab).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByText(/August 14, 2026 · 3 min read/)).toBeInTheDocument();
+    expect(screen.getByText(/August 14, 2026 · \d+ min read/)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Read writing" })).toHaveAttribute(
       "href",
       "/writings/small-models-strong-guardrails/",
