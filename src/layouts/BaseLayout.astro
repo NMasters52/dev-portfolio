@@ -1,0 +1,19 @@
+---
+import "../styles/global.css";
+
+interface Props { title: string; description?: string }
+const { title, description = "Software engineering work and writing by Nicholas Masters." } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header"><a href="/">Nicholas Masters</a><span>Software engineer</span></header>
+    <main><slot /></main>
+  </body>
+</html>

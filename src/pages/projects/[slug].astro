@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContentImage from "../../components/ContentImage.astro";
+import { getProjects, type Project } from "../../lib/content";
+
+export function getStaticPaths() {
+  return getProjects().map((project) => ({ params: { slug: project.slug }, props: { project } }));
+}
+const { project } = Astro.props as { project: Project };
+---
+<BaseLayout title={`${project.title} | Nicholas Masters`} description={project.summary}>
+  <article class="detail">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Work</a><span>/</span><span>Project</span></nav>
+    <p class="kicker">{project.status === "in-progress" ? "In-progress project" : "Shipped project"}</p>
+    <h1>{project.title}</h1>
+    <p class="standfirst">{project.summary}</p>
+    <p class="record">● {project.statusLabel} · Last updated {project.formattedUpdatedAt} · {project.role}</p>
+    <div class="links"><a href={project.repositoryUrl}>Source Code</a>{project.liveUrl && <a href={project.liveUrl}>Live Site</a>}</div>
+    <section class="built-with" aria-labelledby="built-with"><h2 id="built-with">Built with</h2><ul class="tags">{project.tags.map((tag) => <li>{tag}</li>)}</ul></section>
+    {project.image && <ContentImage image={project.image} />}
+    <div class="prose" set:html={project.bodyHtml} />
+    {project.relatedWritings.length > 0 && <section class="related-block"><h2>{project.relatedWritings.length === 1 ? "Related writing" : "Related writings"}</h2>{project.relatedWritings.map((writing) => <article><h3><a href={`/writings/${writing.slug}/`}>{writing.title}</a></h3><p class="record">{writing.formattedPublishedAt} · {writing.readingTimeMinutes} min read</p><p>{writing.summary}</p></article>)}</section>}
+    <a class="back" href="/">← Back to all work</a>
+  </article>
+</BaseLayout>

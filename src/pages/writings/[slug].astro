@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContentImage from "../../components/ContentImage.astro";
+import { getProject, getWritings, type Writing } from "../../lib/content";
+
+export function getStaticPaths() {
+  return getWritings().map((writing) => ({ params: { slug: writing.slug }, props: { writing } }));
+}
+const { writing } = Astro.props as { writing: Writing };
+const relatedProjects = writing.relatedProjects.map(getProject);
+---
+<BaseLayout title={`${writing.title} | Nicholas Masters`} description={writing.summary}>
+  <article class="detail">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Work</a><span>/</span><span>Writing</span></nav>
+    <p class="kicker">Engineering note</p>
+    <h1>{writing.title}</h1>
+    <p class="standfirst">{writing.summary}</p>
+    <div class="writing-meta"><span>{writing.formattedPublishedAt} · {writing.readingTimeMinutes} min read</span><ul class="tags" aria-label="Topics">{writing.tags.map((tag) => <li>{tag}</li>)}</ul></div>
+    {writing.image && <ContentImage image={writing.image} />}
+    <div class="prose" set:html={writing.bodyHtml} />
+    <section class="related-block"><h2>Related projects</h2>{relatedProjects.map((project) => <article><h3><a href={`/projects/${project.slug}/`}>{project.title}</a></h3><p class="record">{project.statusLabel} · Last updated {project.formattedUpdatedAt}</p></article>)}</section>
+    <a class="back" href="/">← Back to all work</a>
+  </article>
+</BaseLayout>

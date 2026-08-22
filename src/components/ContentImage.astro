@@ -1,0 +1,13 @@
+---
+import { Image } from "astro:assets";
+
+interface Props { image: { src: string; alt: string } }
+const { image } = Astro.props;
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  "../../../Content/images/**/*.{png,jpg,jpeg,webp}",
+  { eager: true },
+);
+const source = images[`../../../Content/images/${image.src.slice("../images/".length)}`]?.default;
+if (!source) throw new Error(`Content image was validated but could not be imported: ${image.src}`);
+---
+<Image class="content-image" src={source} alt={image.alt} widths={[480, 720, 1080]} sizes="(max-width: 760px) 100vw, 720px" />
