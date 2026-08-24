@@ -10,11 +10,84 @@ const { title, description = "Software engineering work and writing by Nicholas 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <script is:inline>
+      (() => {
+        const key = "portfolio-theme";
+        const saved = window.localStorage.getItem(key);
+        const system = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = saved === "dark" || saved === "light" ? saved : system;
+      })();
+    </script>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
   </head>
   <body>
-    <header class="site-header"><a href="/">Nicholas Masters</a><span>Software engineer</span></header>
+    <header class="site-header">
+      <a class="site-brand" href="/">Nicholas Masters</a>
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a href="/#work">Work</a>
+        <a href="/#about">About</a>
+        <a href="/#contact">Contact</a>
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch color theme">
+          <span aria-hidden="true">◐</span>
+          <span data-theme-label>Theme</span>
+        </button>
+      </nav>
+    </header>
     <main><slot /></main>
+    <script is:inline>
+      (() => {
+        const themeKey = "portfolio-theme";
+        const toggle = document.querySelector("[data-theme-toggle]");
+        const label = document.querySelector("[data-theme-label]");
+        const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+        if (!(toggle instanceof HTMLButtonElement) || !(label instanceof HTMLElement)) return;
+
+        const updateLabel = () => {
+          const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+          const next = theme === "dark" ? "light" : "dark";
+          label.textContent = `${next} theme`;
+          toggle.setAttribute("aria-label", `Switch to ${next} theme`);
+        };
+
+        updateLabel();
+        toggle.addEventListener("click", () => {
+          const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+          document.documentElement.dataset.theme = next;
+          window.localStorage.setItem(themeKey, next);
+          updateLabel();
+        });
+
+        media.addEventListener("change", (event) => {
+          if (window.localStorage.getItem(themeKey)) return;
+          document.documentElement.dataset.theme = event.matches ? "dark" : "light";
+          updateLabel();
+        });
+
+        document.querySelectorAll("[data-copy-email]").forEach((element) => {
+          if (!(element instanceof HTMLButtonElement)) return;
+          const email = element.getAttribute("data-email");
+          const copyLabel = element.querySelector("[data-copy-label]");
+          if (!email || !(copyLabel instanceof HTMLElement)) return;
+
+          element.addEventListener("click", async () => {
+            try {
+              await navigator.clipboard.writeText(email);
+              copyLabel.textContent = "Copied";
+              element.setAttribute("aria-label", "Email address copied");
+            } catch {
+              copyLabel.textContent = "Copy failed";
+              element.setAttribute("aria-label", "Copying the email address failed");
+            }
+
+            window.setTimeout(() => {
+              copyLabel.textContent = "Copy email";
+              element.setAttribute("aria-label", "Copy email address");
+            }, 1600);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>

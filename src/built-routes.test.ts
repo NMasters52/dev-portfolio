@@ -140,6 +140,20 @@ describe("built portfolio routes", () => {
   it("builds Connected Work with Projects selected and canonical destinations", () => {
     const page = html();
 
+    expect(page).toContain('<h1 id="intro-heading">Nicholas Masters</h1>');
+    expect(page).toContain("Software Engineer");
+    expect(page).toContain("React · Node.js · TypeScript");
+    expect(page).toContain("Jacksonville, FL");
+    expect(page).toContain("I like building software, figuring out the messy parts");
+    expect(page).toContain('<img src="/images/nicholas-masters.jpg" alt="Nicholas Masters wearing a navy shirt">');
+    expect(page).toContain("GitHub");
+    expect(page).toContain('href="https://www.linkedin.com/in/nicholas-masters-aa2303323"');
+    expect(page).toContain('href="/resume-nicholas-masters.pdf"');
+    expect(page).toContain('data-copy-email');
+    expect(page).toContain('data-email="nmasters52@gmail.com"');
+    expect(page).toContain('data-theme-toggle');
+    expect(page).toContain('id="about"');
+    expect(page).toContain('id="contact"');
     expect(page).toContain("Connected Work");
     expect(page).toContain('role="tablist"');
     expect(page).toContain('role="tab"');

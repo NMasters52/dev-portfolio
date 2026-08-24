@@ -2,22 +2,83 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ConnectedWork from "../components/ConnectedWork";
 import { getProjects, getWritings } from "../lib/content";
+import { profile } from "../lib/profile";
 
 const projects = getProjects();
 const writings = getWritings();
 ---
 <BaseLayout title="Nicholas Masters | Software engineer">
-  <section class="intro">
-    <p class="kicker">Selected engineering work</p>
-    <h1>Products, systems, and the thinking behind them.</h1>
-    <p>I build resilient software with clear product boundaries. Explore the products and engineering notes that show how I work.</p>
-  </section>
-  <section class="work" aria-labelledby="connected-work-heading">
-    <div class="section-heading">
-      <p class="kicker">Connected Work</p>
-      <h2 id="connected-work-heading">Shipped work and the thinking behind it.</h2>
-      <p>Projects and writing share one evidence surface. Switch views without losing your place.</p>
+  <section class="intro-section" aria-labelledby="intro-heading">
+    <div class="container intro-grid">
+      <div class="portrait">
+        {profile.portraitUrl ? <img src={profile.portraitUrl} alt={profile.portraitAlt} /> : (
+          <><span class="portrait-initials" aria-hidden="true">NM</span><span class="portrait-note">Portrait pending</span></>
+        )}
+      </div>
+      <div class="intro-copy">
+        <p class="eyebrow">{profile.role} <span>/ {profile.technologyLine}</span></p>
+        <h1 id="intro-heading">{profile.name}</h1>
+        <p class="location">{profile.location}</p>
+        <p class="summary">{profile.summary}</p>
+      </div>
+      <div class="hero-actions" aria-label="Contact links">
+        <a class="hero-action" href={profile.githubUrl} target="_blank" rel="noreferrer"><span aria-hidden="true">↗</span> GitHub</a>
+        {profile.linkedinUrl ? (
+          <a class="hero-action" href={profile.linkedinUrl} target="_blank" rel="noreferrer"><span aria-hidden="true">↗</span> LinkedIn</a>
+        ) : (
+          <span class="hero-action is-pending" aria-label="LinkedIn link pending"><span aria-hidden="true">↗</span><span>LinkedIn <small>Link pending</small></span></span>
+        )}
+        {profile.resumeUrl ? (
+          <a class="hero-action" href={profile.resumeUrl} target="_blank" rel="noreferrer"><span aria-hidden="true">↗</span> Résumé</a>
+        ) : (
+          <span class="hero-action is-pending" aria-label="Résumé link pending"><span aria-hidden="true">↗</span><span>Résumé <small>File pending</small></span></span>
+        )}
+        {profile.email ? (
+          <button class="hero-action" data-copy-email data-email={profile.email} type="button" aria-label="Copy email address"><span aria-hidden="true">⌘</span><span aria-live="polite" aria-atomic="true" data-copy-label>Copy email</span></button>
+        ) : (
+          <span class="hero-action is-pending" aria-label="Email address pending"><span aria-hidden="true">⌘</span><span>Copy email <small>Address pending</small></span></span>
+        )}
+      </div>
     </div>
-    <ConnectedWork client:load projects={projects} writings={writings} />
+  </section>
+
+  <section class="work" id="work" aria-labelledby="connected-work-heading">
+    <div class="container">
+      <div class="section-heading">
+        <p class="kicker">Connected Work</p>
+        <h2 id="connected-work-heading">Shipped work and the thinking behind it.</h2>
+        <p>Projects and writing share one evidence surface. Switch views without losing your place.</p>
+      </div>
+    </div>
+    <div class="container">
+      <ConnectedWork client:load projects={projects} writings={writings} />
+    </div>
+  </section>
+
+  <section class="about-section" id="about" aria-labelledby="about-heading">
+    <div class="container about-grid">
+      <p class="voice">I like complicated systems, clear decisions, and making the outside feel simpler than the work underneath it.</p>
+      <div class="about-copy">
+        <p class="kicker">About / Trust</p>
+        <h2 id="about-heading">Simple outside. Technically deep underneath.</h2>
+        <p>The portfolio is an evidence system: shipped work, durable notes, and the decisions connecting them.</p>
+        <dl class="fact-list">
+          <div class="fact"><dt>Focus</dt><dd>Full-stack systems</dd></div>
+          <div class="fact"><dt>Tools</dt><dd>React · Node · TypeScript</dd></div>
+          <div class="fact"><dt>Method</dt><dd>Build · think · document</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact" aria-labelledby="contact-heading">
+    <div class="container contact-wrap">
+      <div>
+        <p class="kicker">Contact</p>
+        <h2 id="contact-heading">Have a useful problem?</h2>
+        <p>I’m interested in thoughtful products, difficult systems, and work that rewards clarity.</p>
+      </div>
+      {profile.email ? <a class="contact-link" href={`mailto:${profile.email}`}>Get in touch ↗</a> : <span class="contact-link is-pending">Contact details pending</span>}
+    </div>
   </section>
 </BaseLayout>
