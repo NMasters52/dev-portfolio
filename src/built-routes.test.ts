@@ -60,6 +60,32 @@ describe("built portfolio routes", () => {
     expect(page).not.toMatch(/available now|launched successfully/i);
   });
 
+  it("builds the thin Bill Buddy project route with live destinations and its detail image", () => {
+    const page = html("projects", "bill-buddy");
+
+    expect(page).toContain('<nav class="breadcrumb" aria-label="Breadcrumb">');
+    expect(page).toContain("Shipped project");
+    expect(page).toContain("Bill Buddy");
+    expect(page).toContain("A recurring bill tracker with due-date previews");
+    expect(page).toMatch(/Shipped · Last updated May 9, 2026 · Frontend Developer/);
+    expect(page).toContain(
+      '<div class="links"><a href="https://github.com/NMasters52/budget-app">Source Code</a><a href="https://budget-app-woad-one.vercel.app">Live Site</a></div>',
+    );
+
+    const builtWith = page.slice(page.indexOf('<section class="built-with"'), page.indexOf('<div class="prose"'));
+    for (const technology of ["React", "Tailwind CSS", "localStorage", "UUID"]) {
+      expect(builtWith).toContain(`<li>${technology}</li>`);
+    }
+
+    expect(page).toContain("What it does");
+    expect(page).toContain("How it works");
+    expect(page).toContain("Where it stands");
+    expect(page).toContain('<img');
+    expect(page).toContain('alt="Bill Buddy bills overview showing recurring bills, due dates, payment status, and bill actions."');
+    expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
+    expect(page).not.toContain("Related writing");
+  });
+
   it("builds the Writing header in the approved thesis-first hierarchy", () => {
     const page = html("writings", "small-models-strong-guardrails");
 
@@ -121,13 +147,23 @@ describe("built portfolio routes", () => {
     expect(page).toContain("Projects");
     expect(page).toContain("Writings");
     expect(page).toContain("Disc Golf Labs");
+    expect(page).toContain("Bill Buddy");
     expect(page).toContain("In progress");
+    expect(page).toContain("Shipped");
     expect(page).toMatch(/Last updated (?:<!-- -->)?August 10, 2026/);
     expect(page).toMatch(/\+(?:<!-- -->)?6/);
     expect(page).toContain('href="/projects/disc-golf-labs/"');
     expect(page).toContain('href="https://github.com/NMasters52/DiscGolfLabs-Frontend"');
+    expect(page).toContain('href="/projects/bill-buddy/"');
+    expect(page).toContain('href="https://github.com/NMasters52/budget-app"');
+    expect(page).toContain('href="https://budget-app-woad-one.vercel.app"');
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
-    expect(page).not.toContain("Live Site");
+    expect(page).not.toContain("<img");
+    const discGolfCard = page.slice(
+      page.indexOf('<article class="card">'),
+      page.indexOf('<article class="card">', page.indexOf('<article class="card">') + 1),
+    );
+    expect(discGolfCard).not.toContain("Live Site");
   });
 
   it("publishes an explicit favicon without a missing browser request", () => {

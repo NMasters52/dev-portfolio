@@ -13,6 +13,7 @@ const fixtureRoot = (name: string) =>
 describe("portfolio content", () => {
   it("loads and derives the canonical records", () => {
     const project = getProject("disc-golf-labs");
+    const billBuddy = getProject("bill-buddy");
     const writing = getWriting("small-models-strong-guardrails");
 
     expect(project).toMatchObject({
@@ -27,6 +28,24 @@ describe("portfolio content", () => {
       formattedUpdatedAt: "August 10, 2026",
     });
     expect(project.bodyHtml).toContain("<h2>The problem</h2>");
+    expect(billBuddy).toMatchObject({
+      slug: "bill-buddy",
+      title: "Bill Buddy",
+      status: "shipped",
+      statusLabel: "Shipped",
+      role: "Frontend Developer",
+      repositoryUrl: "https://github.com/NMasters52/budget-app",
+      liveUrl: "https://budget-app-woad-one.vercel.app",
+      isLive: true,
+      updatedAt: "2026-05-09",
+      formattedUpdatedAt: "May 9, 2026",
+      image: {
+        src: "../images/bill-buddy-home.jpg",
+        alt: "Bill Buddy bills overview showing recurring bills, due dates, payment status, and bill actions.",
+      },
+      relatedWritings: [],
+    });
+    expect(billBuddy.bodyHtml).toContain("<h2>What it does</h2>");
     expect(writing).toMatchObject({
       slug: "small-models-strong-guardrails",
       publishedAt: "2026-08-14",
@@ -52,6 +71,10 @@ describe("portfolio content", () => {
     ]);
     expect(getProject("disc-golf-labs").relatedWritings.map(({ slug }) => slug)).toEqual([
       "small-models-strong-guardrails",
+    ]);
+    expect(loadContent().projects.map(({ slug }) => slug)).toEqual([
+      "disc-golf-labs",
+      "bill-buddy",
     ]);
   });
 

@@ -1,6 +1,6 @@
 // @vitest-environment happy-dom
 import "@testing-library/jest-dom/vitest";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it } from "vitest";
 import { getProjects, getWritings } from "../lib/content";
@@ -17,17 +17,18 @@ describe("Connected Work route behavior", () => {
     renderConnectedWork();
 
     expect(screen.getByRole("tab", { name: /Projects/ })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("heading", { name: "Disc Golf Labs" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Project Details" })).toHaveAttribute(
+    const discGolfCard = screen.getByRole("heading", { name: "Disc Golf Labs" }).closest("article");
+    expect(discGolfCard).toBeInTheDocument();
+    expect(within(discGolfCard!).getByRole("link", { name: "Project Details" })).toHaveAttribute(
       "href",
       "/projects/disc-golf-labs/",
     );
-    expect(screen.getByRole("link", { name: "Source Code" })).toHaveAttribute(
+    expect(within(discGolfCard!).getByRole("link", { name: "Source Code" })).toHaveAttribute(
       "href",
       "https://github.com/NMasters52/DiscGolfLabs-Frontend",
     );
-    expect(screen.queryByRole("link", { name: "Live Site" })).not.toBeInTheDocument();
-    expect(screen.getByText("Related Writing").nextElementSibling).toHaveAttribute(
+    expect(within(discGolfCard!).queryByRole("link", { name: "Live Site" })).not.toBeInTheDocument();
+    expect(within(discGolfCard!).getByText("Related Writing").nextElementSibling).toHaveAttribute(
       "href",
       "/writings/small-models-strong-guardrails/",
     );
