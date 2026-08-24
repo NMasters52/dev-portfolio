@@ -14,6 +14,7 @@ describe("portfolio content", () => {
   it("loads and derives the canonical records", () => {
     const project = getProject("disc-golf-labs");
     const billBuddy = getProject("bill-buddy");
+    const githubFinder = getProject("github-finder");
     const writing = getWriting("small-models-strong-guardrails");
 
     expect(project).toMatchObject({
@@ -46,6 +47,25 @@ describe("portfolio content", () => {
       relatedWritings: [],
     });
     expect(billBuddy.bodyHtml).toContain("<h2>What it does</h2>");
+    expect(githubFinder).toMatchObject({
+      slug: "github-finder",
+      title: "GitHub Finder",
+      status: "shipped",
+      statusLabel: "Shipped",
+      role: "Frontend Developer",
+      tags: ["React", "TypeScript", "Vite", "TanStack Query", "Tailwind CSS", "React Icons", "use-debounce"],
+      repositoryUrl: "https://github.com/NMasters52/github-finder",
+      liveUrl: "https://github-finder-wf5f.vercel.app",
+      isLive: true,
+      updatedAt: "2025-10-22",
+      formattedUpdatedAt: "October 22, 2025",
+      image: {
+        src: "../images/github-finder-populated.jpg",
+        alt: "GitHub Finder showing a populated ThePrimeagen profile result and recent search.",
+      },
+      relatedWritings: [],
+    });
+    expect(githubFinder.bodyHtml).toContain("<h2>What it does</h2>");
     expect(writing).toMatchObject({
       slug: "small-models-strong-guardrails",
       publishedAt: "2026-08-14",
@@ -75,6 +95,7 @@ describe("portfolio content", () => {
     expect(loadContent().projects.map(({ slug }) => slug)).toEqual([
       "disc-golf-labs",
       "bill-buddy",
+      "github-finder",
     ]);
   });
 
