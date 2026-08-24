@@ -8,6 +8,7 @@
     "preview": "astro preview",
     "typecheck": "astro check",
     "test": "vitest run",
+    "github:snapshot": "node --experimental-strip-types scripts/generate-github-snapshot.ts",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage"
   },

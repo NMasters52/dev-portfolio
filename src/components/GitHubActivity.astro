@@ -1,0 +1,92 @@
+---
+import type { GithubSnapshot } from "../lib/github-snapshot";
+import { isGithubSnapshotStale } from "../lib/github-snapshot";
+
+interface Props { snapshot: GithubSnapshot }
+const { snapshot } = Astro.props;
+const stale = isGithubSnapshotStale(snapshot);
+const statusMessage = snapshot.sourceStatus === "fallback"
+  ? "Showing the last successful snapshot while the scheduled refresh recovers."
+  : stale
+    ? "This snapshot is older than two days and may be stale."
+    : "Static snapshot refreshed within the last two days.";
+const generatedAt = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "UTC",
+}).format(new Date(snapshot.generatedAt));
+const calendarDays = snapshot.calendar.flatMap((week) => week.days);
+const calendarLabel = `GitHub contribution activity from ${calendarDays[0]?.date ?? snapshot.window.from} through ${calendarDays.at(-1)?.date ?? snapshot.window.to}`;
+---
+<section class="github-activity" id="github-activity" aria-labelledby="github-activity-heading">
+  <div class="container">
+    <div class="github-activity-heading">
+      <div>
+        <p class="kicker">GitHub / Activity</p>
+        <h2 id="github-activity-heading">A durable record of the work behind the work.</h2>
+        <p>Contribution activity is checked daily and stored with the portfolio, so this evidence remains useful when GitHub is unavailable.</p>
+      </div>
+      <p class:list={["github-activity-status", { "is-stale": stale }]}>
+        <span class="github-status-dot" aria-hidden="true"></span>
+        <span><strong>{stale ? "Snapshot needs refresh" : "Snapshot current"}</strong><br />Generated {generatedAt} UTC. {statusMessage}</span>
+      </p>
+    </div>
+
+    <dl class="github-stat-grid" aria-label="GitHub activity totals for the last 90 days">
+      <div class="github-stat"><dt>Commits</dt><dd>{snapshot.totals.commits}</dd><small>last 90 days</small></div>
+      <div class="github-stat"><dt>Pull requests</dt><dd>{snapshot.totals.pullRequests}</dd><small>last 90 days</small></div>
+      <div class="github-stat"><dt>Issues</dt><dd>{snapshot.totals.issues}</dd><small>last 90 days</small></div>
+    </dl>
+
+    <div class="github-calendar-card">
+      <div class="github-calendar-heading">
+        <div>
+          <p class="kicker">Contribution calendar</p>
+          <h3>Last 12 months</h3>
+        </div>
+        <span>{calendarDays.length} days · Rolling totals: {snapshot.window.from}—{snapshot.window.to}</span>
+      </div>
+      <div class="github-calendar-scroll" role="img" aria-label={calendarLabel}>
+        <div class="github-calendar" aria-hidden="true">
+          {snapshot.calendar.map((week) => (
+            <div class="github-calendar-week">
+              {week.days.map((day) => <span class:list={["github-calendar-day", `level-${day.level}`]} title={`${day.date}: ${day.count} contribution${day.count === 1 ? "" : "s"}`} />)}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="github-calendar-legend" aria-hidden="true">
+        <span>Less</span><i class="github-calendar-day level-none"></i><i class="github-calendar-day level-low"></i><i class="github-calendar-day level-medium"></i><i class="github-calendar-day level-high"></i><i class="github-calendar-day level-highest"></i><span>More</span>
+      </div>
+      <details class="github-calendar-details">
+        <summary>View daily contribution values</summary>
+        <ol>
+          {calendarDays.map((day) => <li><time datetime={day.date}>{day.date}</time><span>{day.count} contribution{day.count === 1 ? "" : "s"}</span></li>)}
+        </ol>
+      </details>
+    </div>
+
+    <div class="github-repositories-heading">
+      <div>
+        <p class="kicker">Curated repositories</p>
+        <h3>Selected work, equal weight.</h3>
+      </div>
+      <p>Recent activity is bounded to the repositories represented in this portfolio. Each endpoint contributes up to ten recent records.</p>
+    </div>
+    <div class="github-repository-grid">
+      {snapshot.repositories.length > 0 ? snapshot.repositories.map((repository) => (
+        <article class="github-repository-card">
+          <div class="github-repository-topline"><span>{repository.language ?? "Repository"}</span><span>{repository.stars} stars</span></div>
+          <h4><a href={repository.url}>{repository.title}</a></h4>
+          <p>{repository.description || "A curated repository in the portfolio record."}</p>
+          <dl class="github-repository-stats">
+            <div><dt>Recent commits</dt><dd>{repository.recent.commits}</dd></div>
+            <div><dt>Recent PRs</dt><dd>{repository.recent.pullRequests}</dd></div>
+            <div><dt>Recent issues</dt><dd>{repository.recent.issues}</dd></div>
+          </dl>
+          <a class="github-repository-link" href={repository.url}>Open repository ↗</a>
+        </article>
+      )) : <p class="github-empty-state">No curated repository records are available in this snapshot. The last valid artifact remains intact.</p>}
+    </div>
+  </div>
+</section>

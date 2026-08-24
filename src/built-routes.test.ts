@@ -203,10 +203,21 @@ describe("built portfolio routes", () => {
     expect(page).toContain('href="https://budget-app-woad-one.vercel.app"');
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
     expect(page).not.toContain("<img");
+    expect(page).toContain('<section class="github-activity" id="github-activity"');
+    expect(page).toContain("A durable record of the work behind the work.");
+    expect(page).toContain("Contribution calendar");
+    expect(page).toContain("View daily contribution values");
+    expect(page).toContain("Snapshot current");
+    expect(page).toContain("Pull requests");
+    expect(page).toContain("Disc Golf Labs");
+    expect(page).not.toContain("api.github.com");
+    expect(page).not.toContain("Bearer ");
     const discGolfCard = page.slice(
       page.indexOf('<article class="card">'),
       page.indexOf('<article class="card">', page.indexOf('<article class="card">') + 1),
     );
+    const workSurface = page.slice(page.indexOf('<section class="work"'), page.indexOf('<section class="about-section"'));
+    expect(workSurface).not.toContain("<img");
     expect(discGolfCard).not.toContain("Live Site");
   });
 

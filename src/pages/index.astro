@@ -1,11 +1,15 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ConnectedWork from "../components/ConnectedWork";
+import GitHubActivity from "../components/GitHubActivity.astro";
 import { getProjects, getWritings } from "../lib/content";
+import { validateGithubSnapshot } from "../lib/github-snapshot";
 import { profile } from "../lib/profile";
+import snapshotData from "../data/github-snapshot.json";
 
 const projects = getProjects();
 const writings = getWritings();
+const githubSnapshot = validateGithubSnapshot(snapshotData);
 ---
 <BaseLayout title="Nicholas Masters | Software engineer">
   <section class="intro-section" aria-labelledby="intro-heading">
@@ -54,6 +58,8 @@ const writings = getWritings();
       <ConnectedWork client:load projects={projects} writings={writings} />
     </div>
   </section>
+
+  <GitHubActivity snapshot={githubSnapshot} />
 
   <section class="about-section" id="about" aria-labelledby="about-heading">
     <div class="container about-grid">
