@@ -186,21 +186,6 @@ h1 { font-size: clamp(3.25rem, 8vw, 6.5rem); font-weight: 400; }
 .github-calendar-details ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: .5rem 1.5rem; max-height: 18rem; overflow-y: auto; padding: 1rem 1rem 1rem 2rem; }
 .github-calendar-details li { display: flex; justify-content: space-between; gap: .5rem; }
 .github-calendar-details li span { color: var(--color-text); }
-.github-repositories-heading { margin: clamp(3rem, 7vw, 6rem) 0 1.75rem; }
-.github-repositories-heading h3 { margin-bottom: 0; font-size: clamp(1.75rem, 4vw, 2.75rem); }
-.github-repository-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 1.25rem; }
-.github-repository-card { display: flex; flex-direction: column; min-height: 19rem; padding: 1.5rem; border: 1px solid var(--color-border); background: var(--color-background); }
-.github-repository-topline { display: flex; justify-content: space-between; gap: 1rem; color: var(--color-muted); font-family: ui-monospace, monospace; font-size: .62rem; letter-spacing: .06em; text-transform: uppercase; }
-.github-repository-topline span:first-child { color: var(--color-accent); }
-.github-repository-card h4 { margin: 2rem 0 .75rem; font-family: "Necto Mono", ui-monospace, monospace; font-size: 1.3rem; font-weight: 400; }
-.github-repository-card h4 a { color: var(--color-text); }
-.github-repository-card > p { margin: 0; color: var(--color-muted); font-size: .92rem; }
-.github-repository-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; margin: auto 0 1.5rem; padding-top: 1rem; border-top: 1px solid var(--color-border); }
-.github-repository-stats div { display: grid; gap: .2rem; }
-.github-repository-stats dt { color: var(--color-muted); font: .58rem "Necto Mono", ui-monospace, monospace; text-transform: uppercase; }
-.github-repository-stats dd { margin: 0; font-family: "Necto Mono", ui-monospace, monospace; }
-.github-repository-link { font-family: ui-monospace, monospace; font-size: .7rem; }
-.github-empty-state { padding: 2rem; border: 1px dashed var(--color-border); color: var(--color-muted); }
 .detail { width: min(100%, 720px); margin: 4rem auto; }
 .detail h1 { font-size: clamp(2.25rem, 8vw, 4.75rem); }
 .breadcrumb { display: flex; gap: .5rem; color: var(--color-muted); }
@@ -223,6 +208,6 @@ h1 { font-size: clamp(3.25rem, 8vw, 6.5rem); font-weight: 400; }
 .related-block article + article { margin-top: 2rem; }
 .back { display: inline-block; margin-top: 2rem; }
 .not-found { width: min(100%, 720px); margin: 8rem auto; }
-@media (max-width: 850px) { .hero-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .about-grid, .github-activity-heading, .github-repositories-heading { grid-template-columns: 1fr; } .github-activity-status { max-width: 32rem; } }
+@media (max-width: 850px) { .hero-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; } .about-grid, .github-activity-heading { grid-template-columns: 1fr; } .github-activity-status { max-width: 32rem; } }
 @media (max-width: 600px) { .site-header { align-items: flex-start; flex-direction: column; gap: .75rem; } .site-nav { width: 100%; justify-content: space-between; gap: .75rem; } .site-nav a { font-size: .62rem; } .intro-section, .work, .github-activity, .about-section, .contact-section { padding-block: 4rem; } .intro-grid { grid-template-columns: 1fr; } .portrait { width: 110px; } .hero-actions { grid-template-columns: 1fr; gap: .75rem; } .hero-action { min-height: 4rem; } .card { min-height: auto; } .writing-meta { align-items: flex-start; flex-direction: column; } .contact-wrap { grid-template-columns: 1fr; } .github-stat-grid { grid-template-columns: 1fr; } .github-stat { min-height: 7rem; } .github-calendar-heading { align-items: flex-start; flex-direction: column; } .github-calendar-heading > span { text-align: left; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }

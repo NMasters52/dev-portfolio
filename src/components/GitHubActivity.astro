@@ -66,27 +66,5 @@ const calendarLabel = `GitHub contribution activity from ${calendarDays[0]?.date
       </details>
     </div>
 
-    <div class="github-repositories-heading">
-      <div>
-        <p class="kicker">Curated repositories</p>
-        <h3>Selected work, equal weight.</h3>
-      </div>
-      <p>Recent activity is bounded to the repositories represented in this portfolio. Each endpoint contributes up to ten recent records.</p>
-    </div>
-    <div class="github-repository-grid">
-      {snapshot.repositories.length > 0 ? snapshot.repositories.map((repository) => (
-        <article class="github-repository-card">
-          <div class="github-repository-topline"><span>{repository.language ?? "Repository"}</span><span>{repository.stars} stars</span></div>
-          <h4><a href={repository.url}>{repository.title}</a></h4>
-          <p>{repository.description || "A curated repository in the portfolio record."}</p>
-          <dl class="github-repository-stats">
-            <div><dt>Recent commits</dt><dd>{repository.recent.commits}</dd></div>
-            <div><dt>Recent PRs</dt><dd>{repository.recent.pullRequests}</dd></div>
-            <div><dt>Recent issues</dt><dd>{repository.recent.issues}</dd></div>
-          </dl>
-          <a class="github-repository-link" href={repository.url}>Open repository ↗</a>
-        </article>
-      )) : <p class="github-empty-state">No curated repository records are available in this snapshot. The last valid artifact remains intact.</p>}
-    </div>
   </div>
 </section>

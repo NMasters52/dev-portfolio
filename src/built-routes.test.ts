@@ -210,6 +210,8 @@ describe("built portfolio routes", () => {
     expect(page).toContain("Snapshot current");
     expect(page).toContain("Pull requests");
     expect(page).toContain("Disc Golf Labs");
+    expect(page).not.toContain("Curated repositories");
+    expect(page).not.toContain("github-repository-card");
     expect(page).not.toContain("api.github.com");
     expect(page).not.toContain("Bearer ");
     const discGolfCard = page.slice(
