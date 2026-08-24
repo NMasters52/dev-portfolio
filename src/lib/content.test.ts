@@ -94,6 +94,7 @@ describe("portfolio content", () => {
     ]);
     expect(loadContent().projects.map(({ slug }) => slug)).toEqual([
       "disc-golf-labs",
+      "rascofx",
       "bill-buddy",
       "github-finder",
     ]);

@@ -86,6 +86,36 @@ describe("built portfolio routes", () => {
     expect(page).not.toContain("Related writing");
   });
 
+  it("builds the RascoFX project route with its approved client evidence", () => {
+    const page = html("projects", "rascofx");
+    const homepage = html();
+
+    expect(homepage).toContain("RascoFX");
+    expect(homepage).toContain('href="/projects/rascofx/"');
+    expect(homepage).toContain('href="https://github.com/NMasters52/fireworks"');
+    expect(homepage).toContain('href="https://rascofx.com"');
+    expect(page).toContain('<nav class="breadcrumb" aria-label="Breadcrumb">');
+    expect(page).toContain("Shipped project");
+    expect(page).toContain("RascoFX");
+    expect(page).toContain("A product catalog for a local fireworks business");
+    expect(page).toContain("Shipped · Last updated June 5, 2026 · Frontend Developer");
+    expect(page).toContain(
+      '<div class="links"><a href="https://github.com/NMasters52/fireworks">Source Code</a><a href="https://rascofx.com">Live Site</a></div>',
+    );
+
+    const builtWith = page.slice(page.indexOf('<section class="built-with"'), page.indexOf('<div class="prose"'));
+    for (const technology of ["React", "Vite", "Tailwind CSS", "React Router DOM", "Formspree", "Vercel", "Cloudinary", "React Icons", "fireworks-js", "QRCode React"]) {
+      expect(builtWith).toContain(`<li>${technology}</li>`);
+    }
+
+    expect(page).toContain("What it does");
+    expect(page).toContain("How it works");
+    expect(page).toContain("Where it stands");
+    expect(page).toContain('alt="RascoFX Bowser 24pk product detail showing its demonstration video, product image, and category."');
+    expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
+    expect(page).not.toContain("Related writing");
+  });
+
   it("builds the Writing header in the approved thesis-first hierarchy", () => {
     const page = html("writings", "small-models-strong-guardrails");
 
