@@ -187,6 +187,9 @@ describe("built portfolio routes", () => {
     expect(page).toContain('href="/resume-nicholas-masters.pdf"');
     expect(page).toContain('data-copy-email');
     expect(page).toContain('data-email="nmasters52@gmail.com"');
+    const locationLabel = page.indexOf('<span class="contact-detail-label">Location</span>');
+    const resumeLabel = page.indexOf('<span class="contact-detail-label">Resume</span>');
+    expect(resumeLabel).toBeGreaterThan(locationLabel);
     expect(page).toContain('data-theme-toggle');
     expect(page).toContain('id="about"');
     expect(page).toContain('id="contact"');
