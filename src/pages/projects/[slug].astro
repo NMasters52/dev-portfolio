@@ -10,11 +10,9 @@ const { project } = Astro.props as { project: Project };
 ---
 <BaseLayout title={`${project.title} | Nicholas Masters`} description={project.summary}>
   <article class="detail">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Work</a><span>/</span><span>Project</span></nav>
-    <p class="kicker">{project.status === "in-progress" ? "In-progress project" : "Shipped project"}</p>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><span class="breadcrumb-arrow" aria-hidden="true">←</span><a href="/">Work</a><span>/</span><span>Project</span></nav>
     <h1>{project.title}</h1>
     <p class="standfirst">{project.summary}</p>
-    <p class="record">● {project.statusLabel} · Last updated {project.formattedUpdatedAt} · {project.role}</p>
     <div class="links"><a href={project.repositoryUrl}>Source Code</a>{project.liveUrl && <a href={project.liveUrl}>Live Site</a>}</div>
     <section class="built-with" aria-labelledby="built-with"><h2 id="built-with">Built with</h2><ul class="tags">{project.tags.map((tag) => <li>{tag}</li>)}</ul></section>
     {project.image && <ContentImage image={project.image} />}

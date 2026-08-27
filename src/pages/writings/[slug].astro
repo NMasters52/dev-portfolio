@@ -11,7 +11,7 @@ const relatedProjects = writing.relatedProjects.map(getProject);
 ---
 <BaseLayout title={`${writing.title} | Nicholas Masters`} description={writing.summary}>
   <article class="detail">
-    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Work</a><span>/</span><span>Writing</span></nav>
+    <nav class="breadcrumb" aria-label="Breadcrumb"><span class="breadcrumb-arrow" aria-hidden="true">←</span><a href="/">Work</a><span>/</span><span>Writing</span></nav>
     <p class="kicker">Engineering note</p>
     <h1>{writing.title}</h1>
     <p class="standfirst">{writing.summary}</p>

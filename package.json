@@ -16,6 +16,7 @@
     "@astrojs/react": "latest",
     "astro": "latest",
     "gray-matter": "latest",
+    "lucide-react": "^1.34.0",
     "marked": "latest",
     "react": "latest",
     "react-dom": "latest"

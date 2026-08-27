@@ -21,10 +21,11 @@ describe("built portfolio routes", () => {
     const page = html("projects", "disc-golf-labs");
 
     expect(page).toContain('<nav class="breadcrumb" aria-label="Breadcrumb">');
-    expect(page).toContain("In-progress project");
+    expect(page).toContain('<span class="breadcrumb-arrow" aria-hidden="true">←</span><a href="/">Work</a>');
     expect(page).toContain("Disc Golf Labs");
     expect(page).toContain("A training platform for disc golfers");
-    expect(page).toMatch(/In progress · Last updated August 10, 2026 · Founder/);
+    expect(page).not.toContain("In-progress project");
+    expect(page).not.toMatch(/In progress · Last updated August 10, 2026 · Founder/);
     expect(page).toContain(
       '<div class="links"><a href="https://github.com/NMasters52/DiscGolfLabs-Frontend">Source Code</a></div>',
     );
@@ -53,7 +54,6 @@ describe("built portfolio routes", () => {
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
     expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
     expect(page).not.toContain("Live Site");
-    expect(page).not.toContain("<img");
     expect(page).toContain(
       "there are no outcome metrics to publish yet: no user counts, revenue, or launch",
     );
@@ -64,10 +64,10 @@ describe("built portfolio routes", () => {
     const page = html("projects", "bill-buddy");
 
     expect(page).toContain('<nav class="breadcrumb" aria-label="Breadcrumb">');
-    expect(page).toContain("Shipped project");
     expect(page).toContain("Bill Buddy");
     expect(page).toContain("A recurring bill tracker with due-date previews");
-    expect(page).toMatch(/Shipped · Last updated May 9, 2026 · Frontend Developer/);
+    expect(page).not.toContain("Shipped project");
+    expect(page).not.toMatch(/Shipped · Last updated May 9, 2026 · Frontend Developer/);
     expect(page).toContain(
       '<div class="links"><a href="https://github.com/NMasters52/budget-app">Source Code</a><a href="https://budget-app-woad-one.vercel.app">Live Site</a></div>',
     );
@@ -95,10 +95,10 @@ describe("built portfolio routes", () => {
     expect(homepage).toContain('href="https://github.com/NMasters52/fireworks"');
     expect(homepage).toContain('href="https://rascofx.com"');
     expect(page).toContain('<nav class="breadcrumb" aria-label="Breadcrumb">');
-    expect(page).toContain("Shipped project");
     expect(page).toContain("RascoFX");
     expect(page).toContain("A product catalog for a local fireworks business");
-    expect(page).toContain("Shipped · Last updated June 5, 2026 · Frontend Developer");
+    expect(page).not.toContain("Shipped project");
+    expect(page).not.toContain("Shipped · Last updated June 5, 2026 · Frontend Developer");
     expect(page).toContain(
       '<div class="links"><a href="https://github.com/NMasters52/fireworks">Source Code</a><a href="https://rascofx.com">Live Site</a></div>',
     );
@@ -174,7 +174,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain("Software Engineer");
     expect(page).toContain("React · Node.js · TypeScript");
     expect(page).toContain("Jacksonville, FL");
-    expect(page).toContain("I like building software, figuring out the messy parts");
+    expect(page).toContain("I build software, figure out the messy parts, and document what I learned from it.");
     expect(page).toContain('<img src="/images/nicholas-masters.jpg" alt="Nicholas Masters wearing a navy shirt">');
     expect(page).toContain("GitHub");
     expect(page).toContain('href="https://www.linkedin.com/in/nicholas-masters-aa2303323"');
@@ -194,7 +194,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain("Bill Buddy");
     expect(page).toContain("In progress");
     expect(page).toContain("Shipped");
-    expect(page).toMatch(/Last updated (?:<!-- -->)?August 10, 2026/);
+    expect(page).not.toMatch(/Updated (?:<!-- -->)?August 10, 2026/);
     expect(page).toMatch(/\+(?:<!-- -->)?6/);
     expect(page).toContain('href="/projects/disc-golf-labs/"');
     expect(page).toContain('href="https://github.com/NMasters52/DiscGolfLabs-Frontend"');
@@ -202,7 +202,6 @@ describe("built portfolio routes", () => {
     expect(page).toContain('href="https://github.com/NMasters52/budget-app"');
     expect(page).toContain('href="https://budget-app-woad-one.vercel.app"');
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
-    expect(page).not.toContain("<img");
     expect(page).toContain('<section class="github-activity" id="github-activity"');
     expect(page).toContain("I am pretty committed...");
     expect(page).toContain("Contribution calendar");

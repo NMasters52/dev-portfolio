@@ -1,6 +1,7 @@
 ---
 import type { GithubSnapshot } from "../lib/github-snapshot";
 import { isGithubSnapshotStale } from "../lib/github-snapshot";
+import { profile } from "../lib/profile";
 
 interface Props { snapshot: GithubSnapshot }
 const { snapshot } = Astro.props;
@@ -24,7 +25,6 @@ const calendarLabel = `GitHub contribution activity from ${calendarDays[0]?.date
       <div>
         <p class="kicker">GitHub / Activity</p>
         <h2 id="github-activity-heading">I am pretty committed...</h2>
-        <p>Contribution activity is checked daily and stored with the portfolio, so this evidence remains useful when GitHub is unavailable.</p>
       </div>
       <p class:list={["github-activity-status", { "is-stale": stale }]}>
         <span class="github-status-dot" aria-hidden="true"></span>
@@ -58,12 +58,15 @@ const calendarLabel = `GitHub contribution activity from ${calendarDays[0]?.date
       <div class="github-calendar-legend" aria-hidden="true">
         <span>Less</span><i class="github-calendar-day level-none"></i><i class="github-calendar-day level-low"></i><i class="github-calendar-day level-medium"></i><i class="github-calendar-day level-high"></i><i class="github-calendar-day level-highest"></i><span>More</span>
       </div>
-      <details class="github-calendar-details">
-        <summary>View daily contribution values</summary>
-        <ol>
-          {calendarDays.map((day) => <li><time datetime={day.date}>{day.date}</time><span>{day.count} contribution{day.count === 1 ? "" : "s"}</span></li>)}
-        </ol>
-      </details>
+      <div class="github-calendar-footer">
+        <details class="github-calendar-details">
+          <summary>View daily contribution values</summary>
+          <ol>
+            {calendarDays.map((day) => <li><time datetime={day.date}>{day.date}</time><span>{day.count} contribution{day.count === 1 ? "" : "s"}</span></li>)}
+          </ol>
+        </details>
+        <a class="github-home-link" href={profile.githubUrl} target="_blank" rel="noreferrer">Open GitHub home <span aria-hidden="true">↗</span></a>
+      </div>
     </div>
 
   </div>

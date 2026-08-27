@@ -25,7 +25,7 @@ describe("GitHub Finder routes", () => {
 
     expect(page).toContain("<h1>GitHub Finder</h1>");
     expect(page).toContain("A GitHub profile search interface with recent searches");
-    expect(page).toContain("Shipped · Last updated October 22, 2025 · Frontend Developer");
+    expect(page).not.toContain("Shipped · Last updated October 22, 2025 · Frontend Developer");
     expect(page).toContain(
       '<div class="links"><a href="https://github.com/NMasters52/github-finder">Source Code</a><a href="https://github-finder-wf5f.vercel.app">Live Site</a></div>',
     );

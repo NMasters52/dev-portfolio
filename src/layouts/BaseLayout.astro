@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import { Icon } from "../components/Icon";
+import { profile } from "../lib/profile";
 
 interface Props { title: string; description?: string }
 const { title, description = "Software engineering work and writing by Nicholas Masters." } = Astro.props;
@@ -23,32 +25,43 @@ const { title, description = "Software engineering work and writing by Nicholas 
   </head>
   <body>
     <header class="site-header">
-      <a class="site-brand" href="/">Nicholas Masters</a>
+      <a class="site-brand" href="/"><span>Nicholas Masters</span><span class="site-brand-suffix">/ portfolio</span></a>
       <nav class="site-nav" aria-label="Primary navigation">
         <a href="/#work">Work</a>
         <a href="/#about">About</a>
         <a href="/#contact">Contact</a>
-        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch color theme">
-          <span aria-hidden="true">◐</span>
-          <span data-theme-label>Theme</span>
+        <button class="theme-toggle" data-theme-toggle type="button" aria-label="Use dark theme" title="Use dark theme">
+          <span class="theme-toggle-icon" aria-hidden="true"><Icon name="sun" size={13} strokeWidth={1.8} className="theme-sun" /><Icon name="moon" size={13} strokeWidth={1.8} className="theme-moon" /></span>
         </button>
       </nav>
     </header>
     <main><slot /></main>
+    <footer class="site-footer">
+      <div class="site-footer-inner">
+        <p>Keep in touch with the work.</p>
+        <nav aria-label="Footer links">
+          <a href={profile.githubUrl} target="_blank" rel="noreferrer">GitHub</a>
+          <a href={profile.linkedinUrl} target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href={`mailto:${profile.email}`}>Email</a>
+          <a href={profile.resumeUrl} target="_blank" rel="noreferrer">Resume</a>
+        </nav>
+      </div>
+    </footer>
     <script is:inline>
       (() => {
         const themeKey = "portfolio-theme";
         const toggle = document.querySelector("[data-theme-toggle]");
-        const label = document.querySelector("[data-theme-label]");
         const media = window.matchMedia("(prefers-color-scheme: dark)");
 
-        if (!(toggle instanceof HTMLButtonElement) || !(label instanceof HTMLElement)) return;
+        if (!(toggle instanceof HTMLButtonElement)) return;
 
         const updateLabel = () => {
           const theme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
           const next = theme === "dark" ? "light" : "dark";
-          label.textContent = `${next} theme`;
-          toggle.setAttribute("aria-label", `Switch to ${next} theme`);
+          const label = `Use ${next} theme`;
+          toggle.setAttribute("aria-label", label);
+          toggle.setAttribute("title", label);
+          toggle.setAttribute("aria-pressed", String(theme === "dark"));
         };
 
         updateLabel();
@@ -65,25 +78,29 @@ const { title, description = "Software engineering work and writing by Nicholas 
           updateLabel();
         });
 
-        document.querySelectorAll("[data-copy-email]").forEach((element) => {
+        const copyButtons = document.querySelectorAll("[data-copy-value]");
+        copyButtons.forEach((element) => {
           if (!(element instanceof HTMLButtonElement)) return;
-          const email = element.getAttribute("data-email");
+          const value = element.getAttribute("data-copy-value");
           const copyLabel = element.querySelector("[data-copy-label]");
-          if (!email || !(copyLabel instanceof HTMLElement)) return;
+          if (!value) return;
 
           element.addEventListener("click", async () => {
             try {
-              await navigator.clipboard.writeText(email);
-              copyLabel.textContent = "Copied";
-              element.setAttribute("aria-label", "Email address copied");
+              await navigator.clipboard.writeText(value);
+              element.classList.add("is-copied");
+              if (copyLabel instanceof HTMLElement) copyLabel.textContent = "Copied";
+              element.setAttribute("aria-label", "Copied to clipboard");
             } catch {
-              copyLabel.textContent = "Copy failed";
-              element.setAttribute("aria-label", "Copying the email address failed");
+              element.classList.add("copy-failed");
+              if (copyLabel instanceof HTMLElement) copyLabel.textContent = "Copy failed";
+              element.setAttribute("aria-label", "Copying to the clipboard failed");
             }
 
             window.setTimeout(() => {
-              copyLabel.textContent = "Copy email";
-              element.setAttribute("aria-label", "Copy email address");
+              element.classList.remove("is-copied", "copy-failed");
+              if (copyLabel instanceof HTMLElement) copyLabel.textContent = element.hasAttribute("data-copy-all") ? "Copy all" : "Copy email";
+              element.setAttribute("aria-label", element.hasAttribute("data-copy-all") ? "Copy all available contact details" : "Copy email address");
             }, 1600);
           });
         });

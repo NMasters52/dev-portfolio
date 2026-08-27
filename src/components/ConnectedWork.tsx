@@ -91,7 +91,7 @@ function ProjectCard({ project }: { project: Project }) {
 
   return (
     <article className="card">
-      <p className="card-record"><span>{project.statusLabel}</span><span>Last updated {project.formattedUpdatedAt}</span></p>
+      <p className="card-record"><span>{project.statusLabel}</span></p>
       <h3><a href={`/projects/${project.slug}/`}>{project.title}</a></h3>
       <p>{project.summary}</p>
       <ul className="tags" aria-label="Technologies">
@@ -103,14 +103,14 @@ function ProjectCard({ project }: { project: Project }) {
         <a href={project.repositoryUrl}>Source Code</a>
         {project.liveUrl && <a href={project.liveUrl}>Live Site</a>}
       </div>
-      {project.relatedWritings.length > 0 && (
+      {project.relatedWritings.length > 0 && <div className="card-footer">
         <div className="related">
           <span>{project.relatedWritings.length === 1 ? "Related Writing" : "Related Writings"}</span>
           {project.relatedWritings.map((writing) => (
             <a href={`/writings/${writing.slug}/`} key={writing.slug}>{writing.title}</a>
           ))}
         </div>
-      )}
+      </div>}
     </article>
   );
 }
@@ -120,16 +120,19 @@ function WritingCard({ writing, projects }: { writing: Writing; projects: Projec
 
   return (
     <article className="card">
-      <p className="card-record"><span>Writing</span><span>{writing.formattedPublishedAt} · {writing.readingTimeMinutes} min read</span></p>
+      <p className="card-record"><span>Writing</span><span>Connected note</span></p>
       <h3><a href={`/writings/${writing.slug}/`}>{writing.title}</a></h3>
       <p>{writing.summary}</p>
       <ul className="tags" aria-label="Topics">{writing.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul>
       <div className="links"><a href={`/writings/${writing.slug}/`}>Read writing</a></div>
-      <div className="related">
-        <span>{relatedProjects.length === 1 ? "Related Project" : "Related Projects"}</span>
-        {relatedProjects.map((project) => (
-          <a href={`/projects/${project.slug}/`} key={project.slug}>{project.title}</a>
-        ))}
+      <div className="card-footer">
+        <div className="related">
+          <span>{relatedProjects.length === 1 ? "Related Project" : "Related Projects"}</span>
+          {relatedProjects.map((project) => (
+            <a href={`/projects/${project.slug}/`} key={project.slug}>{project.title}</a>
+          ))}
+        </div>
+        <p className="card-support">Published {writing.formattedPublishedAt} · {writing.readingTimeMinutes} min read</p>
       </div>
     </article>
   );
