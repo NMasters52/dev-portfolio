@@ -134,7 +134,7 @@ describe("built portfolio routes", () => {
     expect(standfirst).toBeGreaterThan(title);
     expect(metadata).toBeGreaterThan(standfirst);
     expect(body).toBeGreaterThan(metadata);
-    expect(page).toContain('<time datetime="2026-08-14">August 14, 2026</time> · 4 min read');
+    expect(page).toContain('<time datetime="2026-08-14">August 14, 2026</time> · 5 min read');
     expect(page).toContain('<ul class="tags" aria-label="Topics"><li>AI</li><li>Agents</li><li>Workflow</li></ul>');
     expect(page).not.toContain("<img");
   });
@@ -144,15 +144,13 @@ describe("built portfolio routes", () => {
     const prose = page.slice(page.indexOf('<div class="prose">'), page.indexOf('<section class="related-block"'));
     const related = page.slice(page.indexOf('<section class="related-block"'), page.indexOf('<a class="back"'));
 
-    expect(prose).toContain("<h2>The claim</h2>");
-    expect(prose).toContain("<ol>");
-    expect(prose).toContain("<code>any</code>");
-    expect(prose).toContain('<code class="language-yaml">');
-    expect(prose).toContain('<figure aria-labelledby="guardrail-flow-caption">');
-    expect(prose).toContain('<svg viewBox="0 0 640 150" role="img"');
-    expect(prose).toContain('<figcaption id="guardrail-flow-caption">');
-    expect(prose).toContain("<blockquote>");
-    expect(prose).toContain("The model proposes; the repository disposes.");
+    expect(prose).toContain("<h2>The Guardrails</h2>");
+    expect(prose).toContain("<h2>The Pitfalls</h2>");
+    expect(prose).toContain("<h2>Staying in the Smart Zone</h2>");
+    expect(prose).toContain("<h2>You Are Part of the Model&#39;s Ceiling</h2>");
+    expect(prose).toContain("<h2>Summary</h2>");
+    expect(prose).toContain("how I handle React Query");
+    expect(prose).toContain("roughly 150k tokens");
     expect(related).toContain('<section class="related-block" aria-labelledby="related-projects-heading">');
     expect(related).toContain('<h2 id="related-projects-heading">Related projects</h2>');
     expect(related).toContain('<a href="/projects/disc-golf-labs/">Disc Golf Labs</a>');

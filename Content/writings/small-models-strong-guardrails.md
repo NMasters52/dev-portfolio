@@ -10,82 +10,82 @@ relatedProjects:
   - disc-golf-labs
 ---
 
-## The claim
+I've been experimenting with how far I can push smaller, faster models for real software work.
 
-Small coding models are useful exactly to the degree your repository can judge them. A frontier model can hold an architecture in its head and mostly stay honest; a smaller one cannot. But most of what we call coding is not architecture. It is bounded changes against a codebase that already knows more than the model does.
+My workflow lately has been built around ChatGPT's Luna model on Lite mode, Matt Pocock's skills, and GitHub issue tickets for triage, memory, and goal alignment. The model is cheap and fast. Pair that with strong guardrails and a good harness, and you can get a surprisingly capable workflow without burning through tokens or constantly reaching for a frontier model.
 
-If the repository can type-check, test, and lint the result, the model's job shrinks to **proposing a diff that survives those gates**. That is a job a small model can do cheaply, on every commit, without being trusted.
+I'm currently paying for the $20 Plus plan, and I still haven't consistently hit the limits. Granted, I work a full-time job that isn't currently a developer role, but I use this subscription every day for coding and other work. Being able to use it that often without regularly hitting limits is a big part of the value for me.
 
-## Where small models fall apart
+## The Guardrails
 
-The failure modes are consistent, and none of them are intelligence problems. They are judgment problems, the exact thing a repository is good at supplying:
+I try to keep my guardrails organic.
 
-- **Context drift**: long sessions wander from the stated task into drive-by edits.
-- **Confident API misuse**: invented props and endpoints look plausible and compile wrong.
-- **Diff scope creep**: fixes grow tails through formatting, renames, and unrequested refactors.
-- **Verification theater**: prose explains why the change works instead of running it.
+I'm not interested in building an enormous collection of prompts that I have to constantly maintain. I want the repository itself to do as much of the steering as possible.
 
-## Guardrails that hold
+That means things like `AGENTS.md`, TypeScript's self-documenting nature, solid repository documentation, existing patterns, naming conventions, and reusable skills.
 
-Four constraints cover nearly all of it. Each is a fact about the repository, not an instruction to the model.
+These things make smaller, scrappier models much more useful.
 
-1. **Typed boundaries.** Strict TypeScript, no `any` escapes in CI, and schemas at the edges. Wrong API use should be a compile error, not a review comment.
-2. **Tests as the arbiter.** The model sees failing tests first and passing tests as its stop condition. Explanations do not count as evidence.
-3. **Small task shaping.** One behavior per session. If the diff cannot be read in a minute, the task was too big.
-4. **Gates, not vibes.** Types, lint, and tests run on every agent diff before a human reads a line.
+A good example is how I handle React Query. My query and mutation patterns are documented and modular, and the codebase has a shared vocabulary for how things should be named and structured.
 
-```yaml
-session:
-  budget: one-behavior
-fences:
-  types: strict
-  lint: error
-gates:
-  pre_review: [types, lint, tests]
-  tests: failing-first
-output:
-  diff_only: true
-```
+When I ask an agent to build a feature, I don't need it to invent the architecture from scratch. I can point it at an existing mutation or query and effectively say, "Follow this pattern for the new feature."
 
-<figure aria-labelledby="guardrail-flow-caption">
-  <svg viewBox="0 0 640 150" role="img" aria-label="A task crosses type and lint checks into a small model, then its patch crosses tests and review">
-    <defs>
-      <marker id="guardrail-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-        <path d="M 0 1 L 9 5 L 0 9" fill="none" stroke="currentColor" stroke-width="1.6" />
-      </marker>
-    </defs>
-    <g font-family="ui-monospace, monospace" font-size="13" text-anchor="middle">
-      <rect x="10" y="46" width="120" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
-      <text x="70" y="72" fill="currentColor">task</text>
-      <rect x="260" y="46" width="140" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.8" />
-      <text x="330" y="72" fill="currentColor">small model</text>
-      <rect x="510" y="46" width="120" height="44" rx="8" fill="none" stroke="currentColor" stroke-width="1.5" />
-      <text x="570" y="72" fill="currentColor">patch</text>
-      <line x1="134" y1="68" x2="254" y2="68" stroke="currentColor" stroke-width="1.5" marker-end="url(#guardrail-arrow)" />
-      <line x1="404" y1="68" x2="504" y2="68" stroke="currentColor" stroke-width="1.5" marker-end="url(#guardrail-arrow)" />
-      <text x="194" y="34" fill="currentColor" opacity="0.65" font-size="11">types + lint</text>
-      <text x="454" y="34" fill="currentColor" opacity="0.65" font-size="11">tests + review</text>
-    </g>
-  </svg>
-  <figcaption id="guardrail-flow-caption">Every model pass crosses the same two checks.</figcaption>
-</figure>
+If every mutation uses similar naming, file structure, function signatures, and invalidation patterns, the model has much less to figure out.
 
-> The model proposes; the repository disposes.
+I'm reducing the amount of reasoning it needs to do.
 
-## Running it in Disc Golf Labs
+That's where smaller models start becoming really effective.
 
-This is where the note pays rent. Disc Golf Labs runs on a small-model loop: each agent session is scoped to one feature area, starts from a failing test, and ends at a green run. The scaffold prompt is four lines. Everything else the model needs to know, the repository already says through its types and tests.
+I'm currently using Codex inside VS Code with the Codex extension. I like being able to see the diffs and maintain visibility into exactly what is being written or merged.
 
-The result is boring diffs, and boring is the point. Review became skimming for intent instead of hunting for hallucinations.
+I don't take this approach with every project. For one-off experiments, I'm much more willing to let an agent run.
 
-## What still goes to bigger models
+With Disc Golf Labs, it's different.
 
-- Novel architecture spikes with no precedent in the repository.
-- Cross-cutting refactors that genuinely touch many modules at once.
-- First-draft prose, this note included.
+I care about what gets written there. If I'm going to ship the code, I want to understand the decisions behind it and be able to own those decisions later.
 
-## Takeaways
+## The Pitfalls
 
-- A small model is a proposal engine, not an engineer.
-- The repository is the reviewer. Write the review rules down.
-- Constraints that hold a small model also make a big model cheaper.
+There are still plenty of areas where a lightweight, fast model can get you into trouble.
+
+The biggest one is ambiguity.
+
+The stronger frontier models are getting better at inferring intent from a vague task. You can sometimes give them an incomplete idea, answer a few questions, and watch them get surprisingly close to the result you had in your head.
+
+I don't expect that from the smaller models. With them, I'm pair programming. The model and I need to stay aligned on what task we're solving, why we're solving it, and what "done" actually means.
+
+These models also tend to aggressively optimize for the goal you've put in front of them. That's incredibly useful when the goal is clear. It's also one of the biggest foot guns when it isn't.
+
+I've been using Matt Pocock's `/grill-me` skill for this. The skill forces me to clarify and polish an idea before handing it off for implementation. It helps expose the assumptions that otherwise stay stuck in my head.
+
+`/wayfinder` is another useful one. It helps define the destination and work backward toward a reasonable path to get there.
+
+Both skills help me align myself and the model before spending a large amount of context or implementation effort.
+
+## Staying in the Smart Zone
+
+Context management has also become part of the workflow. In my experience, once a session starts getting much beyond roughly 150k tokens, I trust the model less. I think of that range as the "smart zone," borrowing the term from Matt Pocock's teaching.
+
+A GitHub issue becomes a useful boundary. Finish the task, capture the important decisions, merge it, and start the next task with a cleaner context.
+
+## You Are Part of the Model's Ceiling
+
+The floor for building software has risen dramatically. Someone with very little software experience can now produce a working website. It might not be particularly good software, but the fact that they can produce it at all is a meaningful change.
+
+I don't think that makes software engineering expertise less important. I think it changes where that expertise matters. If producing code becomes cheaper, judgment about what code should exist becomes more valuable.
+
+The agent can suggest another abstraction, a view model, five unit tests, or another `useEffect`. Somebody still has to decide whether any of those things actually belong in the system.
+
+The model doesn't have durable ownership of the codebase. It doesn't have deterministic outcomes. It doesn't truly remember why a decision was made six months ago unless that decision has been captured somewhere it can access.
+
+We need to recognize when the agent is following a pattern versus inventing one. We need to know when a test protects meaningful behavior and when it's just increasing coverage. We need to catch the unnecessary abstraction that looks reasonable in a diff but makes the system harder to maintain.
+
+In that sense, we're part of the model's effective ceiling.
+
+## Summary
+
+Lightweight models are extremely useful for building software. With strong guardrails, a good harness, clear task boundaries, and active alignment with the person using them, they can produce meaningful work quickly and cheaply.
+
+The better I get at documenting patterns, defining tasks, managing context, reviewing decisions, and knowing when the model is wrong, the more useful these tools become.
+
+The model is getting better, but so is the environment I put around it. Increasingly, I think that's where the leverage is.
