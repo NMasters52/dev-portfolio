@@ -28,9 +28,13 @@ describe("Connected Work route behavior", () => {
       "https://github.com/NMasters52/DiscGolfLabs-Frontend",
     );
     expect(within(discGolfCard!).queryByRole("link", { name: "Live Site" })).not.toBeInTheDocument();
-    expect(within(discGolfCard!).getByText("Related Writing").nextElementSibling).toHaveAttribute(
+    expect(within(discGolfCard!).getByText("Related Writings").nextElementSibling).toHaveAttribute(
       "href",
       "/writings/small-models-strong-guardrails/",
+    );
+    expect(within(discGolfCard!).getByRole("link", { name: "Graph Engineering: Stop Thinking in Steps, Start Mapping Dependencies" })).toHaveAttribute(
+      "href",
+      "/writings/graph-engineering-dependencies/",
     );
   });
 
@@ -46,11 +50,18 @@ describe("Connected Work route behavior", () => {
     expect(writingsTab).toHaveFocus();
     expect(writingsTab).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText(/August 14, 2026 · \d+ min read/)).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Read writing" })).toHaveAttribute(
+    const writingLinks = screen.getAllByRole("link", { name: "Read writing" });
+    expect(writingLinks).toHaveLength(2);
+    expect(writingLinks[0]).toHaveAttribute(
       "href",
       "/writings/small-models-strong-guardrails/",
     );
-    expect(screen.getByText("Related Project").nextElementSibling).toHaveAttribute(
+    expect(writingLinks[1]).toHaveAttribute(
+      "href",
+      "/writings/graph-engineering-dependencies/",
+    );
+    const firstWritingCard = screen.getByRole("heading", { name: "Small Models, Strong Guardrails" }).closest("article");
+    expect(within(firstWritingCard!).getByText("Related Project").nextElementSibling).toHaveAttribute(
       "href",
       "/projects/disc-golf-labs/",
     );

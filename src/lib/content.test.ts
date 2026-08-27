@@ -16,6 +16,7 @@ describe("portfolio content", () => {
     const billBuddy = getProject("bill-buddy");
     const githubFinder = getProject("github-finder");
     const writing = getWriting("small-models-strong-guardrails");
+    const graphEngineering = getWriting("graph-engineering-dependencies");
 
     expect(project).toMatchObject({
       slug: "disc-golf-labs",
@@ -74,6 +75,13 @@ describe("portfolio content", () => {
     });
     expect(writing.readingTimeMinutes).toBeGreaterThan(0);
     expect(writing.bodyHtml).toContain("<h2>");
+    expect(graphEngineering).toMatchObject({
+      slug: "graph-engineering-dependencies",
+      publishedAt: "2026-08-10",
+      formattedPublishedAt: "August 10, 2026",
+      relatedProjects: ["disc-golf-labs"],
+    });
+    expect(graphEngineering.bodyHtml).toContain("https://dev.to/discgolfdev/graph-engineering-stop-thinking-in-steps-start-mapping-dependencies-bm2");
   });
 
   it("orders records and derives reverse relationships", () => {
@@ -91,6 +99,7 @@ describe("portfolio content", () => {
     ]);
     expect(getProject("disc-golf-labs").relatedWritings.map(({ slug }) => slug)).toEqual([
       "small-models-strong-guardrails",
+      "graph-engineering-dependencies",
     ]);
     expect(loadContent().projects.map(({ slug }) => slug)).toEqual([
       "disc-golf-labs",
