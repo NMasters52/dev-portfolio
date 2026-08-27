@@ -1,19 +1,11 @@
 ---
 import type { GithubSnapshot } from "../lib/github-snapshot";
-import { isGithubSnapshotStale } from "../lib/github-snapshot";
 import { profile } from "../lib/profile";
 
 interface Props { snapshot: GithubSnapshot }
 const { snapshot } = Astro.props;
-const stale = isGithubSnapshotStale(snapshot);
-const statusMessage = snapshot.sourceStatus === "fallback"
-  ? "Showing the last successful snapshot while the scheduled refresh recovers."
-  : stale
-    ? "This snapshot is older than two days and may be stale."
-    : "Static snapshot refreshed within the last two days.";
 const generatedAt = new Intl.DateTimeFormat("en-US", {
   dateStyle: "medium",
-  timeStyle: "short",
   timeZone: "UTC",
 }).format(new Date(snapshot.generatedAt));
 const calendarDays = snapshot.calendar.flatMap((week) => week.days);
@@ -26,9 +18,8 @@ const calendarLabel = `GitHub contribution activity from ${calendarDays[0]?.date
         <p class="kicker">GitHub / Activity</p>
         <h2 id="github-activity-heading">I am pretty committed...</h2>
       </div>
-      <p class:list={["github-activity-status", { "is-stale": stale }]}>
-        <span class="github-status-dot" aria-hidden="true"></span>
-        <span><strong>{stale ? "Snapshot needs refresh" : "Snapshot current"}</strong><br />Generated {generatedAt} UTC. {statusMessage}</span>
+      <p class="github-activity-update">
+        Last successful update: <time datetime={snapshot.generatedAt}>{generatedAt}</time>
       </p>
     </div>
 

@@ -204,7 +204,9 @@ describe("built portfolio routes", () => {
     expect(page).toContain("I am pretty committed...");
     expect(page).toContain("Contribution calendar");
     expect(page).toContain("View daily contribution values");
-    expect(page).toContain("Snapshot current");
+    expect(page).toContain("Last successful update:");
+    expect(page).not.toContain("Snapshot current");
+    expect(page).not.toContain("Snapshot needs refresh");
     expect(page).toContain("Pull requests");
     expect(page).toContain("Disc Golf Labs");
     expect(page).not.toContain("Curated repositories");

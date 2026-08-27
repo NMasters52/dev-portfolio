@@ -1,8 +1,10 @@
+import fs from "node:fs/promises";
 import path from "node:path";
 import { getProjects } from "../src/lib/content.ts";
 import {
   createGithubApiSource,
   refreshGithubSnapshot,
+  validateGithubSnapshot,
 } from "../src/lib/github-snapshot.ts";
 
 const token = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;
@@ -19,7 +21,17 @@ const snapshotPath = path.join(process.cwd(), "src/data/github-snapshot.json");
 
 try {
   const changed = await refreshGithubSnapshot(snapshotPath, source, { repositories });
-  console.log(changed ? "GitHub activity snapshot refreshed." : "GitHub activity snapshot is unchanged.");
+  const persistedSnapshot = validateGithubSnapshot(JSON.parse(await fs.readFile(snapshotPath, "utf8")));
+  console.log(JSON.stringify({
+    event: "github_snapshot_refresh",
+    status: "success",
+    checkedAt: new Date().toISOString(),
+    persistedGeneratedAt: persistedSnapshot.generatedAt,
+    changed,
+    window: persistedSnapshot.window,
+    totals: persistedSnapshot.totals,
+    repositories: persistedSnapshot.repositories.length,
+  }));
 } catch (error) {
   console.error(error instanceof Error ? error.message : "GitHub activity snapshot refresh failed");
   process.exitCode = 1;

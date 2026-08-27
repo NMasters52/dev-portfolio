@@ -16,6 +16,6 @@ Date: 2026-08-24
 
 ## Browser QA
 
-The local static preview was opened at `http://127.0.0.1:4322/`. The rendered page was checked directly for the activity region, current freshness disclosure, accessible calendar label, daily-values disclosure, absence of a curated-repositories section, and absence of bearer text or a client `api.github.com` path. The page rendered without a runtime GitHub request.
+The local static preview was opened at `http://127.0.0.1:4322/`. The rendered page was checked directly for the activity region, last-successful-update date, accessible calendar label, daily-values disclosure, absence of a curated-repositories section, and absence of bearer text or a client `api.github.com` path. The page rendered without a runtime GitHub request.
 
 The reduced-motion rule and responsive breakpoints are present in `src/styles/global.css`. A dedicated browser viewport override was unavailable in the local browser session, so narrow-width visual QA remains an explicit follow-up rather than a claim of completion.
