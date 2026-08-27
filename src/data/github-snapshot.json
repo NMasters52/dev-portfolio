@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-27T17:38:05.634Z",
+  "generatedAt": "2026-08-27T17:59:22.401Z",
   "window": {
     "from": "2026-05-30",
     "to": "2026-08-27",
@@ -2039,14 +2039,14 @@
         },
         {
           "date": "2026-08-27",
-          "count": 2,
-          "level": "low"
+          "count": 6,
+          "level": "medium"
         }
       ]
     }
   ],
   "totals": {
-    "commits": 80,
+    "commits": 84,
     "pullRequests": 33,
     "issues": 54
   },
