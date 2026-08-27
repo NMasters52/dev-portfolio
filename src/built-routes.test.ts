@@ -6,6 +6,15 @@ import { beforeAll, describe, expect, it } from "vitest";
 const dist = path.join(process.cwd(), "dist");
 const html = (...parts: string[]) =>
   fs.readFileSync(path.join(dist, ...parts, "index.html"), "utf8");
+const expectImagesToHaveAlt = (page: string) => {
+  const imageTags = page.match(/<img\b[^>]*>/g) ?? [];
+
+  expect(imageTags.length).toBeGreaterThan(0);
+  for (const imageTag of imageTags) {
+    const alt = imageTag.match(/\balt="([^"]*)"/)?.[1];
+    expect(alt?.trim()).toBeTruthy();
+  }
+};
 
 describe("built portfolio routes", () => {
   beforeAll(() => {
@@ -80,8 +89,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain("What it does");
     expect(page).toContain("How it works");
     expect(page).toContain("Where it stands");
-    expect(page).toContain('<img');
-    expect(page).toContain('alt="Bill Buddy bills overview showing recurring bills, due dates, payment status, and bill actions."');
+    expectImagesToHaveAlt(page);
     expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
     expect(page).not.toContain("Related writing");
   });
@@ -111,7 +119,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain("What it does");
     expect(page).toContain("How it works");
     expect(page).toContain("Where it stands");
-    expect(page).toContain('alt="RascoFX Bowser 24pk product detail showing its demonstration video, product image, and category."');
+    expectImagesToHaveAlt(page);
     expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
     expect(page).not.toContain("Related writing");
   });
