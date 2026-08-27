@@ -28,7 +28,7 @@ describe("RascoFX project slice", () => {
       formattedUpdatedAt: "June 5, 2026",
       image: {
         src: "../images/rascofx-product-detail-bowser-24pk.jpg",
-        alt: "RascoFX Bowser 24pk product detail showing its demonstration video, product image, and category.",
+        alt: "RascoFX homepage showing the fireworks logo, tagline, and calls to view products or contact the business.",
       },
       relatedWritings: [],
     });

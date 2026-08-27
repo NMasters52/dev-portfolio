@@ -43,7 +43,7 @@ describe("portfolio content", () => {
       formattedUpdatedAt: "May 9, 2026",
       image: {
         src: "../images/bill-buddy-home.jpg",
-        alt: "Bill Buddy bills overview showing recurring bills, due dates, payment status, and bill actions.",
+        alt: "Bill Buddy Add New Bill form showing bill title, amount, dates, frequency, and auto-calculation controls.",
       },
       relatedWritings: [],
     });
