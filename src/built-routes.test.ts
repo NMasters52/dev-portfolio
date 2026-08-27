@@ -204,7 +204,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain('href="/writings/small-models-strong-guardrails/"');
     expect(page).not.toContain("<img");
     expect(page).toContain('<section class="github-activity" id="github-activity"');
-    expect(page).toContain("A durable record of the work behind the work.");
+    expect(page).toContain("I am pretty committed...");
     expect(page).toContain("Contribution calendar");
     expect(page).toContain("View daily contribution values");
     expect(page).toContain("Snapshot current");
