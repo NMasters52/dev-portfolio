@@ -55,7 +55,7 @@ describe("built portfolio routes", () => {
     expect(page).toContain('<a class="back" href="/">← Back to all work</a>');
     expect(page).not.toContain("Live Site");
     expect(page).toContain(
-      "there are no outcome metrics to publish yet: no user counts, revenue, or launch",
+      "The platform is not public yet, so there are no user or revenue metrics to report.",
     );
     expect(page).not.toMatch(/available now|launched successfully/i);
   });

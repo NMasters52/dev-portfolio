@@ -25,17 +25,12 @@ Disc Golf Labs is built for recreational and competitive players who want practi
 
 ## What it is
 
-A training platform organized around putting, the most coachable part of the game. Putting games set the drill, analytics score it, and progress tracking keeps the history. Accounts via Clerk keep a player's practice theirs across devices.
-
-- **Putting games** use structured drills with scoring, not free putting.
-- **Analytics** show distance and session trends instead of a single round score.
-- **Courses** make practice layouts and repetition concrete.
-- **Progress tracking** keeps the longer history a player actually cares about.
+Disc Golf Labs is a training platform for disc golfers. The MVP focuses on putting and starts with a five-day microlearning course. Each day pairs a short video lesson with a drill the player can complete and score. Disc Golf Labs saves those results so players can track how their putting changes across sessions.
 
 ## How it's built
 
-The React and TypeScript frontend uses TanStack Query for server state, Tailwind CSS and shadcn/ui for the interface, Clerk for authentication, and Stripe for billing. The frontend repository's README references an Express.js and MongoDB backend while the platform is pre-launch.
+The frontend is built with React and TypeScript. TanStack Query manages server state, while Clerk handles authentication and Stripe handles billing. Tailwind CSS and shadcn/ui provide the interface. An Express.js and MongoDB backend stores practice results and feeds the analytics views.
 
 ## Where it stands
 
-Disc Golf Labs is in progress toward a Fall 2026 release. The product is real and moving, but there are no outcome metrics to publish yet: no user counts, revenue, or launch.
+Disc Golf Labs is in development toward a Fall 2026 release. The platform is not public yet, so there are no user or revenue metrics to report.
