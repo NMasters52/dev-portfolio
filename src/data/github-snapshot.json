@@ -1,19 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-04T11:14:50.835Z",
+  "generatedAt": "2026-09-05T10:31:54.787Z",
   "window": {
-    "from": "2026-06-07",
-    "to": "2026-09-04",
+    "from": "2026-06-08",
+    "to": "2026-09-05",
     "days": 90
   },
   "calendar": [
     {
       "days": [
-        {
-          "date": "2025-09-05",
-          "count": 8,
-          "level": "medium"
-        },
         {
           "date": "2025-09-06",
           "count": 7,
@@ -2039,6 +2034,11 @@
         },
         {
           "date": "2026-09-04",
+          "count": 1,
+          "level": "low"
+        },
+        {
+          "date": "2026-09-05",
           "count": 0,
           "level": "none"
         }
@@ -2047,8 +2047,8 @@
   ],
   "totals": {
     "commits": 70,
-    "pullRequests": 27,
-    "issues": 61
+    "pullRequests": 26,
+    "issues": 49
   },
   "repositories": [
     {
@@ -2059,7 +2059,7 @@
       "description": "",
       "language": "TypeScript",
       "stars": 0,
-      "updatedAt": "2026-09-02T15:21:18.000Z",
+      "updatedAt": "2026-09-04T18:37:12.000Z",
       "recent": {
         "commits": 10,
         "pullRequests": 10,
