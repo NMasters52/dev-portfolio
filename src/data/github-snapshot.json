@@ -1,19 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-16T11:28:08.535Z",
+  "generatedAt": "2026-09-17T11:37:56.909Z",
   "window": {
-    "from": "2026-06-19",
-    "to": "2026-09-16",
+    "from": "2026-06-20",
+    "to": "2026-09-17",
     "days": 90
   },
   "calendar": [
     {
       "days": [
-        {
-          "date": "2025-09-17",
-          "count": 1,
-          "level": "low"
-        },
         {
           "date": "2025-09-18",
           "count": 0,
@@ -2039,6 +2034,11 @@
         },
         {
           "date": "2026-09-16",
+          "count": 0,
+          "level": "none"
+        },
+        {
+          "date": "2026-09-17",
           "count": 0,
           "level": "none"
         }
