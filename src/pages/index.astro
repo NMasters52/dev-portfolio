@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ConnectedWork from "../components/ConnectedWork";
+import Tenzies from "../components/tenzies/Tenzies";
 import GitHubActivity from "../components/GitHubActivity.astro";
 import { BrandIcon, Icon } from "../components/Icon";
 import { getProjects, getWritings } from "../lib/content";
@@ -63,6 +64,20 @@ const copyAllValue = [
     </div>
     <div class="container">
       <ConnectedWork client:load projects={projects} writings={writings} />
+    </div>
+  </section>
+
+  <section class="play-section" id="play" aria-labelledby="play-heading">
+    <div class="container play-layout">
+      <div class="play-intro">
+        <h2 id="play-heading">Take a break.<br />Roll some dice.</h2>
+        <p>Tenzies was my React capstone. Now it has a little home here, and you can play it.</p>
+        <a href="https://github.com/NMasters52/react_tenzies" target="_blank" rel="noreferrer">View the original project</a>
+      </div>
+      <div class="play-game">
+        <Tenzies client:visible />
+        <noscript><p>Enable JavaScript to play Tenzies.</p></noscript>
+      </div>
     </div>
   </section>
 

@@ -334,3 +334,15 @@ html[data-nav-open] body { overflow: hidden; }
 @media (max-width: 600px) { .site-nav { gap: .5rem; } .site-nav a { display: none; } .menu-toggle { display: inline-grid; } }
 
 .breadcrumb-arrow { color: var(--color-muted); }
+
+.play-section { padding: clamp(4rem, 8vw, 7rem) 0; border-bottom: 1px solid var(--color-border); scroll-margin-top: 5rem; }
+.play-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.play-intro h2 { margin: 0 0 1.5rem; font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 400; line-height: 1.15; }
+.play-intro p { max-width: 31ch; margin: 0 0 1.75rem; color: var(--color-muted); font-size: 1.05rem; }
+.play-intro a { font-size: .9rem; }
+.play-game { min-width: 0; }
+#tenzies-heading { scroll-margin-top: 7rem; }
+@media (max-width: 900px) {
+  .play-layout { grid-template-columns: 1fr; gap: 2rem; max-width: 620px; }
+  .play-intro p { max-width: 44ch; }
+}
