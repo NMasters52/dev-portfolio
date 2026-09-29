@@ -1,4 +1,4 @@
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import type { Project, Writing } from "../lib/content";
 
 type WorkView = "projects" | "writings";
@@ -12,16 +12,55 @@ const views: WorkView[] = ["projects", "writings"];
 
 export default function ConnectedWork({ projects, writings }: Props) {
   const [activeView, setActiveView] = useState<WorkView>("projects");
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [canScrollRight, setCanScrollRight] = useState(true);
   const scrollPositions = useRef<Record<WorkView, number>>({ projects: 0, writings: 0 });
   const panel = useRef<HTMLDivElement>(null);
   const tabs = useRef<Record<WorkView, HTMLButtonElement | null>>({ projects: null, writings: null });
 
+  function updateActiveCard() {
+    const currentPanel = panel.current;
+    if (!currentPanel) return;
+    const cards = Array.from(currentPanel.querySelectorAll<HTMLElement>(".card"));
+    const panelBounds = currentPanel.getBoundingClientRect();
+    const endPadding = parseFloat(getComputedStyle(currentPanel).paddingRight) || 0;
+    const lastCard = cards.at(-1);
+    setCanScrollRight(Boolean(lastCard && lastCard.getBoundingClientRect().right > panelBounds.right - endPadding + 2));
+    const panelLeft = panelBounds.left;
+    const nextIndex = cards.reduce((closestIndex, card, index) => {
+      const closestCard = cards[closestIndex];
+      return Math.abs(card.getBoundingClientRect().left - panelLeft)
+        < Math.abs(closestCard.getBoundingClientRect().left - panelLeft)
+        ? index
+        : closestIndex;
+    }, 0);
+    setActiveCardIndex(nextIndex);
+  }
+
+  function scrollToCard(index: number) {
+    const currentPanel = panel.current;
+    const cards = currentPanel?.querySelectorAll<HTMLElement>(".card");
+    const card = cards?.[index];
+    if (!currentPanel || !card) return;
+    card.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: index === cards.length - 1 ? "end" : "start",
+    });
+    setActiveCardIndex(index);
+  }
+
+  useEffect(() => {
+    requestAnimationFrame(updateActiveCard);
+  }, [activeView]);
+
   function selectView(view: WorkView, moveFocus = false) {
     if (view === activeView) return;
-    if (panel.current) scrollPositions.current[activeView] = panel.current.scrollTop;
+    if (panel.current) scrollPositions.current[activeView] = panel.current.scrollLeft;
     setActiveView(view);
     requestAnimationFrame(() => {
-      if (panel.current) panel.current.scrollTop = scrollPositions.current[view];
+      if (panel.current) panel.current.scrollLeft = scrollPositions.current[view];
+      updateActiveCard();
       if (moveFocus) tabs.current[view]?.focus();
     });
   }
@@ -65,21 +104,39 @@ export default function ConnectedWork({ projects, writings }: Props) {
         })}
       </div>
 
-      <div
-        aria-labelledby={`${activeView}-tab`}
-        className="work-panel"
-        id="connected-work-panel"
-        ref={panel}
-        role="tabpanel"
-        tabIndex={0}
-      >
-        <div className="card-grid">
-          {activeView === "projects"
-            ? projects.map((project) => <ProjectCard key={project.slug} project={project} />)
-            : writings.map((writing) => (
-              <WritingCard key={writing.slug} projects={projects} writing={writing} />
-            ))}
+      <div className="work-scroll-hint">
+        <div className="work-pagination" role="group" aria-label={`${activeView === "projects" ? "Projects" : "Writings"} carousel`}>
+          {Array.from({ length: activeView === "projects" ? projects.length : writings.length }, (_, index) => (
+            <button
+              aria-current={activeCardIndex === index ? "true" : undefined}
+              aria-label={`Show ${activeView === "projects" ? "project" : "writing"} ${index + 1}`}
+              className="work-pagination-pill"
+              key={index}
+              onClick={() => scrollToCard(index)}
+              type="button"
+            />
+          ))}
         </div>
+      </div>
+      <div className={`work-panel-wrap${canScrollRight ? " has-more" : ""}`}>
+        <div
+          aria-labelledby={`${activeView}-tab`}
+          className="work-panel"
+          id="connected-work-panel"
+          onScroll={updateActiveCard}
+          ref={panel}
+          role="tabpanel"
+          tabIndex={0}
+        >
+          <div className="card-grid">
+            {activeView === "projects"
+              ? projects.map((project) => <ProjectCard key={project.slug} project={project} />)
+              : writings.map((writing) => (
+                <WritingCard key={writing.slug} projects={projects} writing={writing} />
+              ))}
+          </div>
+        </div>
+        <div className="work-scroll-edge" aria-hidden="true" />
       </div>
     </div>
   );

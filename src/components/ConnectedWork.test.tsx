@@ -74,18 +74,32 @@ describe("Connected Work route behavior", () => {
     expect(projectsTab).toHaveFocus();
   });
 
-  it("restores each tab panel scroll position", async () => {
+  it("restores each tab panel horizontal scroll position", async () => {
     renderConnectedWork();
     const panel = screen.getByRole("tabpanel");
-    panel.scrollTop = 240;
+    panel.scrollLeft = 240;
 
     fireEvent.click(screen.getByRole("tab", { name: /Writings/ }));
-    await waitFor(() => expect(panel.scrollTop).toBe(0));
-    panel.scrollTop = 90;
+    await waitFor(() => expect(panel.scrollLeft).toBe(0));
+    panel.scrollLeft = 90;
 
     fireEvent.click(screen.getByRole("tab", { name: /Projects/ }));
-    await waitFor(() => expect(panel.scrollTop).toBe(240));
+    await waitFor(() => expect(panel.scrollLeft).toBe(240));
     fireEvent.click(screen.getByRole("tab", { name: /Writings/ }));
-    await waitFor(() => expect(panel.scrollTop).toBe(90));
+    await waitFor(() => expect(panel.scrollLeft).toBe(90));
+  });
+
+  it("shows carousel pills for each card and lets people jump between cards", async () => {
+    const user = userEvent.setup();
+    renderConnectedWork();
+
+    const pills = screen.getAllByRole("button", { name: /^Show project/ });
+    expect(pills).toHaveLength(4);
+    expect(pills[0]).toHaveAttribute("aria-current", "true");
+
+    await user.click(pills[2]);
+
+    expect(pills[2]).toHaveAttribute("aria-current", "true");
+    expect(pills[0]).not.toHaveAttribute("aria-current");
   });
 });

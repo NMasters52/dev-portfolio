@@ -139,7 +139,21 @@ h1 { font-size: clamp(3.25rem, 8vw, 6.5rem); font-weight: 400; }
 .work-tab + .work-tab { border-left: 1px solid var(--color-border); }
 .work-tab[aria-selected="true"] { background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-text); box-shadow: inset 0 -3px var(--color-accent); }
 .work-tab:focus-visible, .work-panel:focus-visible { outline: 3px solid var(--color-accent); outline-offset: -4px; }
-.work-panel { max-height: 44rem; overflow-y: auto; padding: clamp(1.25rem, 3vw, 2.5rem); }
+.work-panel { overflow-x: auto; padding: 0 clamp(1.25rem, 3vw, 2.5rem) 1.5rem; scroll-snap-type: x mandatory; scroll-padding-inline: clamp(1.25rem, 3vw, 2.5rem); cursor: grab; }
+.work-panel:active { cursor: grabbing; }
+.work-panel-wrap { position: relative; }
+.work-scroll-edge { display: none; position: absolute; top: 0; right: 0; bottom: 1.5rem; width: 4.5rem; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--color-surface) 94%, transparent) 62%); pointer-events: none; }
+.work-panel-wrap.has-more .work-scroll-edge { display: block; }
+.work-scroll-hint { display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 0; padding: 1rem clamp(1.25rem, 3vw, 2.5rem); color: var(--color-muted); font-size: .85rem; }
+.work-pagination { display: flex; align-items: center; gap: .4rem; }
+.work-pagination-pill { width: .45rem; height: .45rem; padding: 0; border: 1px solid var(--color-accent); border-radius: 999px; background: transparent; cursor: pointer; }
+.work-pagination-pill[aria-current="true"] { width: 1.35rem; background: var(--color-accent); }
+.work-pagination-pill:focus-visible { outline: 3px solid var(--color-accent); outline-offset: 3px; }
+@media (pointer: coarse) { .work-panel, .work-panel:active { cursor: auto; } }
+.work-panel .card-grid { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(85%, 32rem); padding-inline-end: clamp(1.25rem, 3vw, 2.5rem); }
+.work-panel .card-grid::after { width: clamp(1.25rem, 3vw, 2.5rem); content: ""; }
+.work-panel .card { min-width: 0; scroll-snap-align: start; overflow-wrap: anywhere; }
+.work-panel .card:last-child { scroll-snap-align: end; }
 .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 1.25rem; }
 .card { display: flex; flex-direction: column; min-height: 28rem; padding: clamp(1.5rem, 4vw, 2.5rem); border: 1px solid var(--color-border); border-radius: .35rem; background: var(--color-background); }
 .card h3 { font-size: 1.75rem; }
