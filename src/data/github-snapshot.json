@@ -1,21 +1,12 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-31T12:20:42.814Z",
+  "generatedAt": "2026-11-01T13:16:43.546Z",
   "window": {
-    "from": "2026-08-03",
-    "to": "2026-10-31",
+    "from": "2026-08-04",
+    "to": "2026-11-01",
     "days": 90
   },
   "calendar": [
-    {
-      "days": [
-        {
-          "date": "2025-11-01",
-          "count": 0,
-          "level": "none"
-        }
-      ]
-    },
     {
       "days": [
         {
@@ -2039,14 +2030,23 @@
         },
         {
           "date": "2026-10-31",
-          "count": 8,
+          "count": 9,
           "level": "medium"
+        }
+      ]
+    },
+    {
+      "days": [
+        {
+          "date": "2026-11-01",
+          "count": 0,
+          "level": "none"
         }
       ]
     }
   ],
   "totals": {
-    "commits": 107,
+    "commits": 108,
     "pullRequests": 22,
     "issues": 58
   },
