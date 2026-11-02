@@ -1,19 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-01T13:16:43.546Z",
+  "generatedAt": "2026-11-02T15:43:17.904Z",
   "window": {
-    "from": "2026-08-04",
-    "to": "2026-11-01",
+    "from": "2026-08-05",
+    "to": "2026-11-02",
     "days": 90
   },
   "calendar": [
     {
       "days": [
-        {
-          "date": "2025-11-02",
-          "count": 2,
-          "level": "low"
-        },
         {
           "date": "2025-11-03",
           "count": 0,
@@ -680,7 +675,7 @@
         {
           "date": "2026-03-02",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-03-03",
@@ -792,7 +787,7 @@
         {
           "date": "2026-03-22",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-03-23",
@@ -1470,7 +1465,7 @@
         {
           "date": "2026-07-22",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-07-23",
@@ -1553,7 +1548,7 @@
         {
           "date": "2026-08-06",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-08-07",
@@ -1577,7 +1572,7 @@
         {
           "date": "2026-08-10",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-08-11",
@@ -1592,7 +1587,7 @@
         {
           "date": "2026-08-13",
           "count": 10,
-          "level": "high"
+          "level": "medium"
         },
         {
           "date": "2026-08-14",
@@ -1699,7 +1694,7 @@
         {
           "date": "2026-09-01",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-09-02",
@@ -1777,7 +1772,7 @@
         {
           "date": "2026-09-15",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-09-16",
@@ -1859,18 +1854,18 @@
         },
         {
           "date": "2026-09-30",
-          "count": 19,
+          "count": 20,
           "level": "highest"
         },
         {
           "date": "2026-10-01",
-          "count": 6,
+          "count": 7,
           "level": "medium"
         },
         {
           "date": "2026-10-02",
           "count": 5,
-          "level": "medium"
+          "level": "low"
         },
         {
           "date": "2026-10-03",
@@ -2039,6 +2034,11 @@
       "days": [
         {
           "date": "2026-11-01",
+          "count": 13,
+          "level": "high"
+        },
+        {
+          "date": "2026-11-02",
           "count": 0,
           "level": "none"
         }
@@ -2046,8 +2046,8 @@
     }
   ],
   "totals": {
-    "commits": 108,
-    "pullRequests": 22,
+    "commits": 115,
+    "pullRequests": 24,
     "issues": 58
   },
   "repositories": [
@@ -2059,11 +2059,11 @@
       "description": "",
       "language": "TypeScript",
       "stars": 0,
-      "updatedAt": "2026-10-31T11:18:13.000Z",
+      "updatedAt": "2026-11-02T00:33:41.000Z",
       "recent": {
         "commits": 10,
         "pullRequests": 10,
-        "issues": 7
+        "issues": 5
       }
     },
     {
