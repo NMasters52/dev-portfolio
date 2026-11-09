@@ -1,19 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-08T13:18:28.601Z",
+  "generatedAt": "2026-11-09T16:10:43.416Z",
   "window": {
-    "from": "2026-08-11",
-    "to": "2026-11-08",
+    "from": "2026-08-12",
+    "to": "2026-11-09",
     "days": 90
   },
   "calendar": [
     {
       "days": [
-        {
-          "date": "2025-11-09",
-          "count": 0,
-          "level": "none"
-        },
         {
           "date": "2025-11-10",
           "count": 0,
@@ -2039,6 +2034,11 @@
       "days": [
         {
           "date": "2026-11-08",
+          "count": 2,
+          "level": "low"
+        },
+        {
+          "date": "2026-11-09",
           "count": 0,
           "level": "none"
         }
