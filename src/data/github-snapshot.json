@@ -1,19 +1,14 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-09T16:10:43.416Z",
+  "generatedAt": "2026-11-10T14:49:08.624Z",
   "window": {
-    "from": "2026-08-12",
-    "to": "2026-11-09",
+    "from": "2026-08-13",
+    "to": "2026-11-10",
     "days": 90
   },
   "calendar": [
     {
       "days": [
-        {
-          "date": "2025-11-10",
-          "count": 0,
-          "level": "none"
-        },
         {
           "date": "2025-11-11",
           "count": 3,
@@ -2041,14 +2036,19 @@
           "date": "2026-11-09",
           "count": 0,
           "level": "none"
+        },
+        {
+          "date": "2026-11-10",
+          "count": 0,
+          "level": "none"
         }
       ]
     }
   ],
   "totals": {
-    "commits": 111,
+    "commits": 103,
     "pullRequests": 22,
-    "issues": 53
+    "issues": 47
   },
   "repositories": [
     {
